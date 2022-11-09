@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class SettingsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Spinner numberSpinner;
@@ -47,6 +48,12 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
                     break;
                 }
         }
+    }
+
+    public void onSaveClicked(View view) {
+        CharSequence toastContent = "Changes saved.";
+        Toast toast = Toast.makeText(getApplicationContext(), toastContent, Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     @Override

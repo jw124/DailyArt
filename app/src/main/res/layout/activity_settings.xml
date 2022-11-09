@@ -97,6 +97,7 @@ tools:context=".SettingsActivity">
         android:text="SAVE CHANGES"
         android:layout_gravity="center"
         android:backgroundTint="#FFC107"
-        android:layout_marginTop="60dp" />
+        android:layout_marginTop="60dp"
+        android:onClick="onSaveClicked" />
 
 </LinearLayout>
