@@ -40,6 +40,7 @@ tools:context=".LoginActivity">
         android:text="LOG IN"
         android:layout_gravity="center"
         android:backgroundTint="#FFC107"
-        android:layout_marginTop="60dp" />
+        android:layout_marginTop="60dp"
+        android:onClick="displayDialog" />
 
 </LinearLayout>

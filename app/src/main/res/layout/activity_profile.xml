@@ -27,6 +27,7 @@
         android:layout_marginRight="40dp"/>
 
     <TextView
+        android:id="@+id/userid_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="banana123"

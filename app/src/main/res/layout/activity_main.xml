@@ -8,19 +8,29 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/welcome_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Welcome"/>
+        android:text="Welcome"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textSize="18sp" />
     
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ART PROMPT" />
+        android:text="ART PROMPT"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:gravity="center" />
     
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Waterfall"/>
+        android:text="Waterfall"
+        android:textSize="18sp"
+        android:gravity="center" />
 
     <Button
         android:id="@+id/upload_button"
