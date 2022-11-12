@@ -23,7 +23,8 @@
         android:text="ART PROMPT"
         android:textStyle="bold"
         android:textSize="25sp"
-        android:gravity="center" />
+        android:gravity="center"
+        android:layout_marginTop="60dp" />
     
     <TextView
         android:layout_width="match_parent"
@@ -32,36 +33,55 @@
         android:textSize="18sp"
         android:gravity="center" />
 
-    <Button
-        android:id="@+id/upload_button"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="UPLOAD"
-        android:onClick="onMainNavClick"
-        android:backgroundTint="#FFC107" />
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="60dp">
 
-    <Button
-        android:id="@+id/milestone_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="MILESTONE"
-        android:onClick="onMainNavClick"
-        android:backgroundTint="#FFC107" />
+        <Button
+            android:id="@+id/upload_button"
+            android:layout_width="140dp"
+            android:layout_height="50dp"
+            android:text="UPLOAD"
+            android:onClick="onMainNavClick"
+            android:backgroundTint="#FFC107"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/profile_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="PROFILE"
-        android:onClick="onMainNavClick"
-        android:backgroundTint="#FFC107" />
+        <Button
+            android:id="@+id/milestone_button"
+            android:layout_width="140dp"
+            android:layout_height="50dp"
+            android:text="MILESTONE"
+            android:onClick="onMainNavClick"
+            android:backgroundTint="#FFC107"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/settings_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SETTINGS"
-        android:onClick="onMainNavClick"
-        android:backgroundTint="#FFC107" />
+        <Button
+            android:id="@+id/profile_button"
+            android:layout_width="140dp"
+            android:layout_height="50dp"
+            android:text="PROFILE"
+            android:onClick="onMainNavClick"
+            android:backgroundTint="#FFC107"
+            app:layout_constraintTop_toBottomOf="@+id/upload_button"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="20dp"/>
+
+        <Button
+            android:id="@+id/settings_button"
+            android:layout_width="140dp"
+            android:layout_height="50dp"
+            android:text="SETTINGS"
+            android:onClick="onMainNavClick"
+            android:backgroundTint="#FFC107"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/milestone_button"
+            android:layout_marginTop="20dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
