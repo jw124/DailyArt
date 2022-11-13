@@ -7,6 +7,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -26,12 +27,17 @@ import android.widget.Toast;
 
 import org.apache.commons.io.FileUtils;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 
 // 获取image => https://www.geeksforgeeks.org/how-to-select-an-image-from-gallery-in-android/
@@ -63,7 +69,7 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
     // the activity result code
     int SELECT_PICTURE = 200;
 
-
+    boolean isMileStone = false;
 
 
     @Override
@@ -79,7 +85,6 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
         ShareButton = (Button)findViewById(R.id.Share);
         SaveButton = (Button)findViewById(R.id.Save);
         IVPreviewImage = (ImageView)findViewById(R.id.IVPreviewImage);
-
         Comment = (TextView)findViewById(R.id.edit_text);
 
         // handle the Choose Image button to trigger
@@ -97,14 +102,17 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
         if (v.getId() == R.id.Album) {
             imageChooser();
         } else if(v.getId() == R.id.Save) {
-            boolean saved = saveImage();
-            if(!saved){
-                Toast.makeText(this,"Save Image Failed",Toast.LENGTH_SHORT).show();
-            }else{
- //             Toast.makeText(this,"Save Image Successfully",Toast.LENGTH_SHORT).show();
-            }
+            saveImageToFile();
+            saveCommentToFile();
         } else if(v.getId() == R.id.Share) {
             share();
+        } else if(v.getId() == R.id.Milestone) {
+            isMileStone = !isMileStone;
+            if(isMileStone){
+                MileStoneButton.setBackgroundColor(Color.GRAY);
+            }else{
+                MileStoneButton.setBackgroundColor(Color.GREEN);
+            }
         }
     }
 
@@ -117,7 +125,6 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
         Intent i = new Intent();
         i.setType("image/*");
         i.setAction(Intent.ACTION_GET_CONTENT);
-
         // pass the constant to compare it
         // with the returned requestCode
         startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
@@ -140,116 +147,126 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
 
                 // Process Uri +Path + Name
                 ImageUri = selectedImageUri;
-                // todo:how to fix this(convert from uri into full path)?
-//                String path = getPath(this,ImageUri);
-//                System.out.println(path);
-
+                ImagePath = getPath(this,ImageUri);
+                ImageName = getFileName(ImageUri);
             }
         }
     }
 
-
-    //handle save images
-    private boolean saveImage() {
-        //validate path
-        if(ImagePath==null || ImagePath=="" || ImageName==null || ImageName==""){
+    private boolean saveCommentToFile(){
+        if(Comment.getText()==null || Comment.getText().toString()==""){
+            Toast.makeText(this,"Input the comment Before Save",Toast.LENGTH_SHORT).show();
             return false;
         }
-        try {
-            insertInPrivateStorage(ImageName,ImagePath);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return false;
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(System.currentTimeMillis());
+        try{
+            File path = Environment.getExternalStorageDirectory();
+            File dir = null;
+            if(isMileStone){
+                dir = new File(path + "/Daily Art/Files/MileStone");
+            }else{
+                dir = new File(path + "/Daily Art/Files/Normal");
+            }
+            dir.mkdirs();
+            //file name
+            String fileName = "Comment_"+timeStamp+".txt";
+            File file = new File(dir,fileName);
+            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(Comment.getText().toString());
+            bw.close();
+            //Toast
+            Toast.makeText(this,fileName+" File saved in :"+dir,Toast.LENGTH_SHORT).show();
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
+            Toast.makeText(this,e.getMessage(),Toast.LENGTH_SHORT).show();
             return false;
         }
-        return true;
     }
+    private boolean saveImageToFile(){
+        if(ImagePath==null || ImagePath==""){
+            Toast.makeText(this,"Choose an Image Before Save",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(System.currentTimeMillis());
+        try{
+            File path = Environment.getExternalStorageDirectory();
+            File dir = null;
+            if(isMileStone){
+                dir = new File(path + "/Daily Art/Files/MileStone");
+            }else{
+                dir = new File(path + "/Daily Art/Files/Normal");
+            }
+            dir.mkdirs();
+            //file name
+            String fileName = "Image_"+timeStamp+".jpg";
+            File file = new File(dir,fileName);
 
-    private void insertInPrivateStorage(String name, String path) throws IOException {
-        FileOutputStream fos  = openFileOutput(name,MODE_APPEND);
-        File file = new File(path);
-        byte[] bytes = getBytesFromFile(file);
-        fos.write(bytes);
-        fos.close();
-        Toast.makeText(getApplicationContext(),"File saved in :"+ getFilesDir() + "/"+name,Toast.LENGTH_SHORT).show();
+            FileOutputStream fos = new FileOutputStream(file);
+            File image= new File(ImagePath);
+            byte[] bytes = getBytesFromFile(image);
+            fos.write(bytes);
+            fos.close();
+            //Toast
+            Toast.makeText(this,fileName+" File saved in :"+dir,Toast.LENGTH_SHORT).show();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this,e.getMessage(),Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
     }
 
     private byte[] getBytesFromFile(File file) throws IOException {
         byte[] data = FileUtils.readFileToByteArray(file);
         return data;
-
     }
 
-//    private String getFileName(Uri uri)
-//    {
-//        String result = null;
-//        if (uri.getScheme().equals("content")) {
-//            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-//            try {
-//                if (cursor != null && cursor.moveToFirst()) {
-//                    int index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-//                    result = cursor.getString(index);
-//                }
-//            } finally {
-//                cursor.close();
-//            }
-//        }
-//        if (result == null) {
-//            result = uri.getPath();
-//            int cut = result.lastIndexOf('/');
-//            if (cut != -1) {
-//                result = result.substring(cut + 1);
-//            }
-//        }
-//        return result;
-//    }
-//    // find path
-//    private String getPath(Context context, Uri uri) {
-//        String path = null;
-//        Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
-//        if (cursor == null) {
-//            return null;
-//        }
-//        if (cursor.moveToFirst()) {
-//            try {
-//                int index = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
-//                path = cursor.getString(index);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        cursor.close();
-//        return path;
-//    }
-    //
-//    public static File uriToFileApiQ(Uri uri, Context context) {
-//        File file = null;
-//        if (uri == null) return file;
-//        //android10以上转换
-//        if (uri.getScheme().equals(ContentResolver.SCHEME_FILE)) {
-//            file = new File(uri.getPath());
-//        } else if (uri.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
-//            //把文件复制到沙盒目录
-//            ContentResolver contentResolver = context.getContentResolver();
-//            String displayName = System.currentTimeMillis() + Math.round((Math.random() + 1) * 1000)
-//                    + "." + MimeTypeMap.getSingleton().getExtensionFromMimeType(contentResolver.getType(uri));
-//
-//            try {
-//                InputStream is = contentResolver.openInputStream(uri);
-//                File cache = new File(context.getCacheDir().getAbsolutePath(), displayName);
-//                FileOutputStream fos = new FileOutputStream(cache);
-//                FileUtils.copy(is, fos);
-//                file = cache;
-//                fos.close();
-//                is.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return file;
-//    }
+    private String getFileName(Uri uri)
+    {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    int index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                    result = cursor.getString(index);
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        if (result == null) {
+            result = uri.getPath();
+            int cut = result.lastIndexOf('/');
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
+    }
+
+    // find path
+    private String getPath(Context context, Uri uri) {
+        String path = null;
+        Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
+        if (cursor == null) {
+            return null;
+        }
+        if (cursor.moveToFirst()) {
+            try {
+                int index = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
+                path = cursor.getString(index);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        cursor.close();
+        return path;
+    }
+
 
     // share function (image + text)
     private void share() {
