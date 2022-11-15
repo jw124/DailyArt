@@ -4,9 +4,15 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,19 +29,21 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
     private SharedPreferences sharedPref;
     private String userID;
     private TextView welcomeView;
+    private AlarmManager alarmManager;
+    private PendingIntent pendingIntent;
 
-public class MainActivity extends AppCompatActivity {
-    ImageView imageView;
-    Button getImageBtn1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        createNotificationChannel();
+        setAlarm();
 
         sharedPref = getSharedPreferences("CurrentUserID", MODE_PRIVATE);
         userID = sharedPref.getString("UserID", "");
@@ -62,6 +70,28 @@ public class MainActivity extends AppCompatActivity {
 
         welcomeView = (TextView) findViewById(R.id.welcome_view);
         welcomeView.setText("Welcome, " + userID + "!");
+    }
+
+    private void setAlarm() {
+        Calendar calender = Calendar.getInstance();
+        calender.add(Calendar.SECOND, 5);
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calender.getTimeInMillis(), pendingIntent);
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "dailyappchannel";
+            String description = "Channel for daily app";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel("dailyapp", name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     public void generateID() {
