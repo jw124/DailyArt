@@ -17,6 +17,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, i, 0);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "dailyapp")
+                .setSmallIcon(R.drawable.ic_launcher_background)
                 .setContentTitle("Daily Art App")
                 .setContentText("Checkout the daily art prompt and upload your drawing!")
                 .setAutoCancel(true)
