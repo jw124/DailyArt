@@ -11,7 +11,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-//import android.os.FileUtils;
+//import org.apache.commons.io.FileUtils;
+import android.os.FileUtils;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.view.View;
@@ -19,8 +20,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.apache.commons.io.FileUtils;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -97,6 +96,8 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
         } else if(v.getId() == R.id.Save) {
             saveImageToFile();
             saveCommentToFile();
+            Intent goToPastWorks = new Intent(getApplicationContext(),PastWorkActivity.class);
+            startActivity(goToPastWorks);
         } else if(v.getId() == R.id.Share) {
             share();
         } else if(v.getId() == R.id.Milestone) {

@@ -2,14 +2,18 @@ package com.example.dailyart;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -29,9 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private String userID;
     private TextView welcomeView;
 
-public class MainActivity extends AppCompatActivity {
-    ImageView imageView;
-    Button getImageBtn1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +40,24 @@ public class MainActivity extends AppCompatActivity {
 
         sharedPref = getSharedPreferences("CurrentUserID", MODE_PRIVATE);
         userID = sharedPref.getString("UserID", "");
+
+
+
+        Button uploadBtn = (Button) findViewById(R.id.upload_button);
+        uploadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent openUploads = new Intent(getApplicationContext(), Upload.class);
+                ActivityCompat.requestPermissions(MainActivity.this,
+                        new String[] {Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.INTERNET,
+                                Manifest.permission.MANAGE_EXTERNAL_STORAGE,
+                                Manifest.permission.CAMERA},
+                        1);
+                startActivity(openUploads);
+            }
+        });
 
         // new user
         if (userID.length() == 0) {
