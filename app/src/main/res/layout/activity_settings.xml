@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+tools:context=".SettingsActivity">
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="40sp"
+        android:layout_marginTop="15dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Notification Type"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp" />
+    
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp" >
+        
+        <RadioButton
+            android:id="@+id/prompt_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Art prompt"
+            android:onClick="onRadioButtonClicked"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/critiques_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Critiques"
+            android:onClick="onRadioButtonClicked"
+            android:textSize="18sp" />
+
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Notification Frequency"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp" >
+
+        <Spinner
+            android:id="@+id/number_spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_weight="0.8"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="per"
+            android:textSize="18sp"
+            android:layout_weight="0.5"
+            android:gravity="center"/>
+
+        <Spinner
+            android:id="@+id/frequency_spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SAVE CHANGES"
+        android:layout_gravity="center"
+        android:backgroundTint="#FFC107"
+        android:layout_marginTop="60dp"
+        android:onClick="onSaveClicked" />
+
+</LinearLayout>
