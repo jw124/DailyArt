@@ -95,8 +95,9 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
         if (v.getId() == R.id.Album) {
             imageChooser();
         } else if(v.getId() == R.id.Save) {
-            saveImageToFile();
-            saveCommentToFile();
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(System.currentTimeMillis());
+            saveImageToFile(timeStamp);
+            saveCommentToFile(timeStamp);
         } else if(v.getId() == R.id.Share) {
             share();
         } else if(v.getId() == R.id.Milestone) {
@@ -186,12 +187,11 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
         }
     }
 
-    private boolean saveCommentToFile(){
+    private boolean saveCommentToFile(String timeStamp){
         if(Comment.getText()==null || Comment.getText().toString()==""){
             Toast.makeText(this,"Input the comment Before Save",Toast.LENGTH_SHORT).show();
             return false;
         }
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(System.currentTimeMillis());
         try{
             File path = Environment.getExternalStorageDirectory();
             File dir = null;
@@ -202,7 +202,7 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
             }
             dir.mkdirs();
             //file name
-            String fileName = "Comment_"+timeStamp+".txt";
+            String fileName = timeStamp+".txt";
             File file = new File(dir,fileName);
             FileWriter fw = new FileWriter(file.getAbsoluteFile());
             BufferedWriter bw = new BufferedWriter(fw);
@@ -217,12 +217,11 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
             return false;
         }
     }
-    private boolean saveImageToFile(){
+    private boolean saveImageToFile(String timeStamp){
         if(ImagePath==null || ImagePath==""){
             Toast.makeText(this,"Choose an Image Before Save",Toast.LENGTH_SHORT).show();
             return false;
         }
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(System.currentTimeMillis());
         try{
             File path = Environment.getExternalStorageDirectory();
             File dir = null;
@@ -233,7 +232,7 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
             }
             dir.mkdirs();
             //file name
-            String fileName = "Image_"+timeStamp+".jpg";
+            String fileName = timeStamp+".jpg";
             File file = new File(dir,fileName);
 
             FileOutputStream fos = new FileOutputStream(file);
