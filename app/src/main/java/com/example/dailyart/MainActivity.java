@@ -2,6 +2,7 @@ package com.example.dailyart;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
     private String userID;
     private TextView welcomeView;
 
+public class MainActivity extends AppCompatActivity {
+    ImageView imageView;
+    Button getImageBtn1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

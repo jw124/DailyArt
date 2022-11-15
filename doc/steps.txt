@@ -1,0 +1,18 @@
+saving and loading app state
+https://stackoverflow.com/questions/10209814/saving-user-information-in-app-settings
+https://developer.android.com/reference/android/content/SharedPreferences
+
+media store doc page
+https://developer.android.com/training/data-storage/shared/media
+
+saving images to file
+https://www.youtube.com/watch?v=tYQ8AO58Aj0
+
+sort images by date
+https://stackoverflow.com/questions/9935753/is-there-a-way-to-sort-images-by-date-in-gallery-android
+
+content resolver to select media content
+https://www.youtube.com/watch?v=eNW1d8tiXmQ
+
+using a grid layout to display image paths
+https://www.youtube.com/watch?v=L8VlPi8mq-g
