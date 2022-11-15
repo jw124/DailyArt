@@ -11,10 +11,11 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-//import org.apache.commons.io.FileUtils;
-import android.os.FileUtils;
+import org.apache.commons.io.FileUtils;
+//import android.os.FileUtils;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -96,10 +97,12 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
         } else if(v.getId() == R.id.Save) {
             
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(System.currentTimeMillis());
-            saveImageToFile(timeStamp);
-            saveCommentToFile(timeStamp);
-            Intent goToPastWorks = new Intent(getApplicationContext(),PastWorkActivity.class);
-            startActivity(goToPastWorks);
+            String newImagePath = saveImageToFile(timeStamp);
+            String critiquePath = saveCommentToFile(timeStamp);
+            Intent goToEditCritique = new Intent(getApplicationContext(),EditCritiqueActivity.class);
+            goToEditCritique.putExtra("IMAGE_FILEPATH", Uri.parse(newImagePath));
+            goToEditCritique.putExtra("CRITIQUE_FILEPATH", Uri.parse(critiquePath));
+            startActivity(goToEditCritique);
         } else if(v.getId() == R.id.Share) {
             share();
         } else if(v.getId() == R.id.Milestone) {
@@ -179,6 +182,7 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
 
                 // Process Uri +Path + Name
                 ImageUri = selectedImageUri;
+                Log.d("IMAGE FROM ALBUM", selectedImageUri.toString());
                 ImagePath = getPath(this,ImageUri);
             }
             else if(requestCode == Camera) {
@@ -189,18 +193,21 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
         }
     }
 
-    private boolean saveCommentToFile(String timeStamp){
+    private String saveCommentToFile(String timeStamp){
         if(Comment.getText()==null || Comment.getText().toString()==""){
             Toast.makeText(this,"Input the comment Before Save",Toast.LENGTH_SHORT).show();
-            return false;
+            return "";
         }
         try{
             File path = Environment.getExternalStorageDirectory();
             File dir = null;
+            String finalDir;
             if(isMileStone){
-                dir = new File(path + "/Daily Art/Files/MileStone");
+                finalDir = path + "/Daily Art/Files/MileStone";
+                dir = new File(finalDir);
             }else{
-                dir = new File(path + "/Daily Art/Files/Normal");
+                finalDir = path + "/Daily Art/Files/Normal";
+                dir = new File(finalDir);
             }
             dir.mkdirs();
             //file name
@@ -212,25 +219,28 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
             bw.close();
             //Toast
             Toast.makeText(this,fileName+" File saved in :"+dir,Toast.LENGTH_SHORT).show();
-            return true;
+            return finalDir + "/" + fileName;
         } catch (IOException e) {
             e.printStackTrace();
             Toast.makeText(this,e.getMessage(),Toast.LENGTH_SHORT).show();
-            return false;
+            return "";
         }
     }
-    private boolean saveImageToFile(String timeStamp){
+    private String saveImageToFile(String timeStamp){
         if(ImagePath==null || ImagePath==""){
             Toast.makeText(this,"Choose an Image Before Save",Toast.LENGTH_SHORT).show();
-            return false;
+            return "";
         }
         try{
             File path = Environment.getExternalStorageDirectory();
             File dir = null;
+            String finalDir;
             if(isMileStone){
-                dir = new File(path + "/Daily Art/Files/MileStone");
+                finalDir = path + "/Daily Art/Files/MileStone";
+                dir = new File(finalDir);
             }else{
-                dir = new File(path + "/Daily Art/Files/Normal");
+                finalDir = path + "/Daily Art/Files/Normal";
+                dir = new File(finalDir);
             }
             dir.mkdirs();
             //file name
@@ -244,11 +254,11 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
             fos.close();
             //Toast
             Toast.makeText(this,fileName+" File saved in :"+dir,Toast.LENGTH_SHORT).show();
-            return true;
+            return finalDir + "/" + fileName;
         } catch (IOException e) {
             e.printStackTrace();
             Toast.makeText(this,e.getMessage(),Toast.LENGTH_SHORT).show();
-            return false;
+            return "";
         }
 
     }

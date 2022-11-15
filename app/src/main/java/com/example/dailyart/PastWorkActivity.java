@@ -20,7 +20,7 @@ import java.util.Date;
 
 public class PastWorkActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     TagView tv;
-    String[] userTags = {"MileStone", "Camera"};
+    String[] userTags = {"MileStone", "Normal"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

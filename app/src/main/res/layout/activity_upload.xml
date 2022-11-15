@@ -35,7 +35,7 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginRight="10dp"
                 android:backgroundTint="#4CAF50"
-                android:text="Gallery"
+                android:text="Camera"
                 android:textColor="@android:color/white"
                 android:textSize="10sp" />
 
