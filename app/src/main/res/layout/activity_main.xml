@@ -1,41 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
-    tools:context=".MainActivity">
-
-
-    <LinearLayout
+    android:orientation="vertical"
+    >
+    <TextView
+        android:id="@+id/tv_first"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="main activity"
+        android:layout_gravity="center"
+        android:textSize="40dp"
+        />
+    <Button
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <ImageView
-            android:layout_height="300dp"
-            android:layout_width="300dp"
-            android:scaleType="centerInside"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:padding="20dp"
-            android:id="@+id/image001"
-            android:contentDescription="image from downloads"/>
-
-        <Button
-            android:id="@+id/getImageBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#DDD83B"
-            android:text="Get Image"
-            android:textColor="@color/black"
-            android:onClick="onclick">
-
-        </Button>
-
-    </LinearLayout>
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="wrap_content"
+        android:onClick="onclick"
+        android:text="enter into upload page"
+        />
+</LinearLayout>
