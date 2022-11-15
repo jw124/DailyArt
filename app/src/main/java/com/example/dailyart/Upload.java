@@ -1,25 +1,20 @@
 package com.example.dailyart;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
-import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 //import android.os.FileUtils;
-import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
-import android.util.Log;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,14 +24,11 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
-import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 
@@ -60,7 +52,7 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
     String ImagePath;
 
     // Image Name
-    String ImageName;
+    // String ImageName;
 
     // comment
     TextView Comment;
@@ -68,6 +60,7 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
     // constant to compare
     // the activity result code
     int SELECT_PICTURE = 200;
+    int Camera = 300;
 
     boolean isMileStone = false;
 
@@ -113,12 +106,14 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
             }else{
                 MileStoneButton.setBackgroundColor(Color.GREEN);
             }
+        } else if(v.getId() == R.id.Gallery) {
+            openCamera();
         }
     }
 
     // this function is triggered when
     // the Select Image Button is clicked
-    void imageChooser() {
+    public void imageChooser() {
 
         // create an instance of the
         // intent of the type image
@@ -128,6 +123,40 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
         // pass the constant to compare it
         // with the returned requestCode
         startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
+    }
+    public void openCamera() {
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        if(intent.resolveActivity(getPackageManager()) != null){
+            //Create a file to store the image
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(this,e.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,"com.example.dailyart.fileprovider", photoFile);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT,photoURI);
+                startActivityForResult(intent,Camera);
+            }
+        }
+    }
+    private File createImageFile() throws IOException {
+        String timeStamp =
+                new SimpleDateFormat("yyyyMMdd_HHmmss",
+                        Locale.getDefault()).format(new Date());
+        String imageFileName = "IMG_" + timeStamp + "_";
+        File storageDir =
+                getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+        ImageUri = Uri.fromFile(image);
+        ImagePath = image.getAbsolutePath();
+        return image;
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -148,7 +177,11 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
                 // Process Uri +Path + Name
                 ImageUri = selectedImageUri;
                 ImagePath = getPath(this,ImageUri);
-                ImageName = getFileName(ImageUri);
+            }
+            else if(requestCode == Camera) {
+                if(ImageUri!= null){
+                    IVPreviewImage.setImageURI(ImageUri);
+                }
             }
         }
     }
