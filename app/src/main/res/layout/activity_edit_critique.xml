@@ -32,23 +32,48 @@
                 android:textSize="34sp"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="600dp"
-                android:id="@+id/focused_image"/>
-
-            <EditText
-                android:layout_width="match_parent"
+                android:id="@+id/focused_image"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/update_critique"/>
+                android:layout_gravity="top" />
 
-        </LinearLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/editCritique"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_below="@+id/focused_image"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:hint="Enter something">
+
+                <!--this is the actual edit text which takes the input-->
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </RelativeLayout>
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/focused_image" />
+
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="#DDD83B"
+            android:text="SAVE CRITIQUE"
+            android:textColor="@color/black" />
+
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

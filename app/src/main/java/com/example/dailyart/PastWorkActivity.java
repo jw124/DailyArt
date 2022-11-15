@@ -1,6 +1,7 @@
 package com.example.dailyart;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,7 +20,7 @@ import java.util.Date;
 
 public class PastWorkActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     TagView tv;
-    String[] userTags = {"Editable", "Camera"};
+    String[] userTags = {"MileStone", "Normal"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +45,10 @@ public class PastWorkActivity extends AppCompatActivity implements AdapterView.O
     private void displayImages(String[] tagsArr){
         ArrayList<ArtworkModel> ams = new ArrayList<ArtworkModel>();
         for (int i = 0; i < tagsArr.length; i++){
-            String currDir = "/sdcard/DCIM/" + tagsArr[i] + "/";
+            String currDir = Environment.getExternalStorageDirectory().toString() + "/Daily Art/Files/" + tagsArr[i] + "/";
             File directory = new File(currDir);
             File[] files = directory.listFiles();
-            for (int j = 0; j < 10; j++)
+            for (int j = 0; j < files.length; j++)
             {
                 if (files[j].getName().endsWith(".jpg") ||
                         files[j].getName().endsWith(".jpg") ||
@@ -55,7 +56,7 @@ public class PastWorkActivity extends AppCompatActivity implements AdapterView.O
                     Log.d("IMAGE PATH", files[i].getName());
                     ams.add(new ArtworkModel("image " + j,
                             currDir + files[j].getName(),
-                            "This is a bad photo",
+                            "This is a good art",
                             new ArrayList<String>(Arrays.asList(tagsArr)),
                             new Date(),
                             currDir + files[j].getName().substring(0, files[j].getName().lastIndexOf('.')) + ".txt"));

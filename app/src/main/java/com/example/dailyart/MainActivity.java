@@ -2,20 +2,23 @@ package com.example.dailyart;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -30,6 +33,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     private SharedPreferences sharedPref;
@@ -45,8 +49,38 @@ public class MainActivity extends AppCompatActivity {
         createNotificationChannel();
         setAlarm();
 
+        String [] prompts = {"Waterfall", "Mountains", "Birds", "Streetscape"};
+        int promptIndex = 0;
         sharedPref = getSharedPreferences("CurrentUserID", MODE_PRIVATE);
         userID = sharedPref.getString("UserID", "");
+
+        TextView randomPrompt = (TextView) findViewById(R.id.generated_prompt);
+        randomPrompt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Random rand = new Random();
+                int ix = rand.nextInt(prompts.length);
+                randomPrompt.setText(prompts[ix]);
+            }
+        });
+
+
+
+        Button uploadBtn = (Button) findViewById(R.id.upload_button);
+        uploadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent openUploads = new Intent(getApplicationContext(), Upload.class);
+                ActivityCompat.requestPermissions(MainActivity.this,
+                        new String[] {Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.INTERNET,
+                                Manifest.permission.MANAGE_EXTERNAL_STORAGE,
+                                Manifest.permission.CAMERA},
+                        1);
+                startActivity(openUploads);
+            }
+        });
 
         // new user
         if (userID.length() == 0) {
@@ -159,9 +193,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = null;
         if(v.getId() == R.id.profile_button){
             intent = new Intent(this, ProfileActivity.class);
-        }
-        else if(v.getId() == R.id.settings_button){
+        } else if(v.getId() == R.id.settings_button){
             intent = new Intent(this, SettingsActivity.class);
+        } else if (v.getId() == R.id.past_works_button){
+            intent = new Intent(this, PastWorkActivity.class);
         }
         startActivity(intent);
     }
