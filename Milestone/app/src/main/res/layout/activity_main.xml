@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="0dp"
+
+
+
+        android:textSize="50dp"
+        android:gravity="center"
+        android:text="Milestone"
+        tools:ignore="MissingConstraints" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <Button
+            android:id="@+id/galleryButton"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#f9c806"
+            android:textAllCaps="false"
+            android:text="Gallery"
+            android:textSize="18dp" />
+
+        <Button
+            android:id="@+id/achievementsButton"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#f9c806"
+            android:textAllCaps="false"
+            android:text="Achievements"
+            android:textSize="18dp"
+            android:visibility="visible" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
