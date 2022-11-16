@@ -48,18 +48,19 @@ public class PastWorkActivity extends AppCompatActivity implements AdapterView.O
             String currDir = Environment.getExternalStorageDirectory().toString() + "/Daily Art/Files/" + tagsArr[i] + "/";
             File directory = new File(currDir);
             File[] files = directory.listFiles();
-            for (int j = 0; j < files.length; j++)
-            {
-                if (files[j].getName().endsWith(".jpg") ||
-                        files[j].getName().endsWith(".jpg") ||
-                        files[j].getName().endsWith(".png")) {
-                    Log.d("IMAGE PATH", files[i].getName());
-                    ams.add(new ArtworkModel("image " + j,
-                            currDir + files[j].getName(),
-                            "This is a good art",
-                            new ArrayList<String>(Arrays.asList(tagsArr)),
-                            new Date(),
-                            currDir + files[j].getName().substring(0, files[j].getName().lastIndexOf('.')) + ".txt"));
+            if (files != null) {
+                for (int j = 0; j < files.length; j++) {
+                    if (files[j].getName().endsWith(".jpg") ||
+                            files[j].getName().endsWith(".jpg") ||
+                            files[j].getName().endsWith(".png")) {
+                        Log.d("IMAGE PATH", files[i].getName());
+                        ams.add(new ArtworkModel("image " + j,
+                                currDir + files[j].getName(),
+                                "This is a good art",
+                                new ArrayList<String>(Arrays.asList(tagsArr)),
+                                new Date(),
+                                currDir + files[j].getName().substring(0, files[j].getName().lastIndexOf('.')) + ".txt"));
+                    }
                 }
             }
         }
