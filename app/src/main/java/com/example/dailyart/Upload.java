@@ -1,5 +1,6 @@
 package com.example.dailyart;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
@@ -16,9 +17,11 @@ import org.apache.commons.io.FileUtils;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +46,7 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
     private Button MileStoneButton;
     private Button ShareButton;
     private Button SaveButton;
+    private ProgressBar mypb;
 
     // One Preview Image
     ImageView IVPreviewImage;
@@ -69,6 +73,9 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
+
+        setContentView(R.layout.activity_upload);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         // register the UI widgets with their appropriate IDs
@@ -322,5 +329,21 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
         sharingIntent.putExtra(android.content.Intent.EXTRA_STREAM,ImageUri);
         sharingIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivity(Intent.createChooser(sharingIntent, "Share via"));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return true;
+    }
+
+    public void load(View view) {
+        int progress=mypb.getProgress();
+        progress=10;
+        mypb.setProgress(progress);
     }
 }

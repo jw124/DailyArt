@@ -3,14 +3,17 @@ package com.example.dailyart;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
@@ -21,10 +24,13 @@ import java.util.Date;
 public class PastWorkActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     TagView tv;
     String[] userTags = {"MileStone", "Normal"};
+    private ProgressBar mypb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_past_works); //setContentView(R.layout.activity_past_works);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         tv = (TagView) findViewById(R.id.interactive_gallery);
 
@@ -89,5 +95,21 @@ public class PastWorkActivity extends AppCompatActivity implements AdapterView.O
     @Override
     public void onClick(View view) {
         this.displayImages(userTags);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return true;
+    }
+
+    public void load(View view) {
+        int progress=mypb.getProgress();
+        progress=10;
+        mypb.setProgress(progress);
     }
 }

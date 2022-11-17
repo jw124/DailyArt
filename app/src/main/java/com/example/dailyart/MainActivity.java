@@ -197,6 +197,8 @@ public class MainActivity extends AppCompatActivity {
             intent = new Intent(this, SettingsActivity.class);
         } else if (v.getId() == R.id.past_works_button){
             intent = new Intent(this, PastWorkActivity.class);
+        } else if (v.getId() == R.id.milestone_button){
+            intent = new Intent(this,Milestone.class);
         }
         startActivity(intent);
     }
