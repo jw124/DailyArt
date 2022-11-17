@@ -19,9 +19,12 @@ import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +42,7 @@ import java.util.Locale;
 // 保存image => https://www.youtube.com/watch?v=oLcxTunwaFk
 // 分享图片和评论 => https://www.youtube.com/watch?v=_rBKy4z1yNU
 // milestone & gallery 待定
-public class Upload extends AppCompatActivity implements View.OnClickListener{
+public class Upload extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     // Buttons
     private Button AlbumButton;
     private Button GalleryButton;
@@ -68,10 +71,13 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
 
     boolean isMileStone = false;
 
+    String tagPath = "General";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        String[] userTags = {"General","Normal"};
         setContentView(R.layout.activity_upload);
 
         setContentView(R.layout.activity_upload);
@@ -94,6 +100,15 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
         MileStoneButton.setOnClickListener(this);
         ShareButton.setOnClickListener(this);
         SaveButton.setOnClickListener(this);
+
+        //Drop down menu
+        Spinner spinner = (Spinner) findViewById(R.id.available_tags);
+
+        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,userTags);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner.setAdapter(aa);
+        spinner.setOnItemSelectedListener(this);
     }
 
 
@@ -106,10 +121,9 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(System.currentTimeMillis());
             String newImagePath = saveImageToFile(timeStamp);
             String critiquePath = saveCommentToFile(timeStamp);
-            Intent goToEditCritique = new Intent(getApplicationContext(),EditCritiqueActivity.class);
-            goToEditCritique.putExtra("IMAGE_FILEPATH", Uri.parse(newImagePath));
-            goToEditCritique.putExtra("CRITIQUE_FILEPATH", Uri.parse(critiquePath));
-            startActivity(goToEditCritique);
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Removes other Activities from stack
+            startActivity(intent);
         } else if(v.getId() == R.id.Share) {
             share();
         } else if(v.getId() == R.id.Milestone) {
@@ -117,7 +131,7 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
             if(isMileStone){
                 MileStoneButton.setBackgroundColor(Color.GRAY);
             }else{
-                MileStoneButton.setBackgroundColor(Color.GREEN);
+                MileStoneButton.setBackgroundColor(Color.parseColor("#DDD83B"));
             }
         } else if(v.getId() == R.id.Gallery) {
             openCamera();
@@ -212,10 +226,18 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
             if(isMileStone){
                 finalDir = path + "/Daily Art/Files/MileStone";
                 dir = new File(finalDir);
-            }else{
-                finalDir = path + "/Daily Art/Files/Normal";
-                dir = new File(finalDir);
+                dir.mkdirs();
+                //file name
+                String fileName = timeStamp+".txt";
+                File file = new File(dir,fileName);
+                FileWriter fw = new FileWriter(file.getAbsoluteFile());
+                BufferedWriter bw = new BufferedWriter(fw);
+                bw.write(Comment.getText().toString());
+                bw.close();
             }
+            finalDir = path + "/Daily Art/Files/" + this.tagPath;
+            dir = new File(finalDir);
+
             dir.mkdirs();
             //file name
             String fileName = timeStamp+".txt";
@@ -245,10 +267,22 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
             if(isMileStone){
                 finalDir = path + "/Daily Art/Files/MileStone";
                 dir = new File(finalDir);
-            }else{
-                finalDir = path + "/Daily Art/Files/Normal";
-                dir = new File(finalDir);
+                //file name
+                String fileName = timeStamp+".jpg";
+                File file = new File(dir,fileName);
+
+                FileOutputStream fos = new FileOutputStream(file);
+                File image= new File(ImagePath);
+                byte[] bytes = getBytesFromFile(image);
+                fos.write(bytes);
+                fos.close();
+                //Toast
+//                Toast.makeText(this,fileName+" File saved in :"+dir,Toast.LENGTH_SHORT).show();
+
             }
+            finalDir = path + "/Daily Art/Files/" + this.tagPath;
+            dir = new File(finalDir);
+
             dir.mkdirs();
             //file name
             String fileName = timeStamp+".jpg";
@@ -345,5 +379,18 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
         int progress=mypb.getProgress();
         progress=10;
         mypb.setProgress(progress);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+        String selectedTag = (String) parent.getItemAtPosition(pos);
+
+        this.tagPath = selectedTag;
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

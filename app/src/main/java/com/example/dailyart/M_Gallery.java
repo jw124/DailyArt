@@ -2,8 +2,6 @@ package com.example.dailyart;
 //
 
 import android.content.Context;
-import android.content.Intent;
-import android.media.session.PlaybackState;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -11,13 +9,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,7 +24,7 @@ import java.util.Date;
 //
 
 public class M_Gallery extends AppCompatActivity {
-    GridView gridView;
+    TagView tv;
 
 
     private ProgressBar mypb;
@@ -43,7 +38,7 @@ public class M_Gallery extends AppCompatActivity {
         setContentView(R.layout.activity_gallery);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        gridView = findViewById(R.id.GridView);
+        tv = findViewById(R.id.interactive_gallery);
 
         ArrayList<ArtworkModel> ams = new ArrayList<ArtworkModel>();
         String currDir = Environment.getExternalStorageDirectory().toString() + "/Daily Art/Files/" + "MileStone" + "/";
@@ -55,12 +50,17 @@ public class M_Gallery extends AppCompatActivity {
                         files[i].getName().endsWith(".jpg") ||
                         files[i].getName().endsWith(".png")) {
                     Log.d("IMAGE PATH", files[i].getName());
-                    CustomAdapter customAdapter = new CustomAdapter(currDir + files[i].getName(),files.length , this);
+                    ams.add(new ArtworkModel("image " + i,
+                            currDir + files[i].getName(),
+                            "This is a good art",
+                            new ArrayList<String>(Arrays.asList("MileStone")),
+                            new Date(),
+                            currDir + files[i].getName().substring(0, files[i].getName().lastIndexOf('.')) + ".txt"));
                 }
             }
 
-
-            gridView.setAdapter(customAdapter);
+            TagViewAdapter tva = new TagViewAdapter(this, ams);
+            tv.setGalleryAdapter(tva);
 
 
         }
