@@ -22,9 +22,9 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:layout_gravity="right"
+                android:layout_gravity="center"
                 android:paddingEnd="5dp"
-                android:gravity="right"
+                android:gravity="center"
                 android:text="@string/past_works_header"
                 android:textSize="34sp"
                 tools:ignore="RtlHardcoded,RtlSymmetry">
@@ -50,7 +50,7 @@
             <Spinner
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_gravity="right"
+                android:layout_gravity="center"
                 android:layout_height="match_parent"
                 android:id="@+id/available_tags"/>
 
