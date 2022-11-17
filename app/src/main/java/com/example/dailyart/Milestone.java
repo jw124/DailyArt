@@ -42,6 +42,14 @@ public class Milestone extends AppCompatActivity {
             }
         });
 
+        galleryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(Milestone.this,M_Gallery.class);
+                startActivity(intent);
+            }
+        });
+
 
     }
     @Override

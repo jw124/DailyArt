@@ -14,13 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:backgroundTint="#DDD83B"
-                android:text="Back"
-                android:textColor="@color/black"
-                android:id="@+id/back_button"/>
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -41,28 +34,38 @@
                 android:id="@+id/focused_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top" />
+                android:layout_gravity="center" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/editCritique"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_below="@+id/focused_image"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:hint="Enter something">
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/editCritique"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_below="@+id/focused_image"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:layout_marginBottom="20dp"-->
+<!--                android:hint="Enter something">-->
 
-                <!--this is the actual edit text which takes the input-->
 
-            </com.google.android.material.textfield.TextInputLayout>
+<!--                -->
+<!--                &lt;!&ndash;this is the actual edit text which takes the input&ndash;&gt;-->
+
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+
 
         </RelativeLayout>
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_text"
+            android:id="@+id/edit_critique_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/focused_image" />
+            android:layout_height="wrap_content" />
+
+
+
+
+
+
+
 
         <Button
             android:id="@+id/save_button"

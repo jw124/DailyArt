@@ -23,7 +23,8 @@ import java.util.Date;
 
 public class PastWorkActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     TagView tv;
-    String[] userTags = {"MileStone", "Normal"};
+//    String[] userTags = {"MileStone", "General","Normal"};
+    String[] userTags = {"General","Normal"};
     private ProgressBar mypb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

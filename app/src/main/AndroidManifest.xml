@@ -38,6 +38,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".M_Gallery"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".EditCritiqueActivity"
             android:exported="false">
             <meta-data

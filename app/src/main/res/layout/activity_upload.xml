@@ -34,9 +34,9 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="32dp"
                 android:layout_marginRight="10dp"
-                android:backgroundTint="#4CAF50"
+                android:backgroundTint="#DDD83B"
                 android:text="Camera"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:textSize="10sp" />
 
             <Button
@@ -46,9 +46,9 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="32dp"
                 android:layout_marginRight="10dp"
-                android:backgroundTint="#4CAF50"
+                android:backgroundTint="#DDD83B"
                 android:text="milestone"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:textSize="10sp" />
 
             <Button
@@ -58,9 +58,9 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="32dp"
                 android:layout_marginRight="10dp"
-                android:backgroundTint="#4CAF50"
+                android:backgroundTint="#DDD83B"
                 android:text="share"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:textSize="10sp" />
 
             <Button
@@ -69,18 +69,24 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="32dp"
-                android:backgroundTint="#4CAF50"
+                android:backgroundTint="#DDD83B"
                 android:text="Album"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:textSize="10sp" />
         </LinearLayout>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:id="@+id/available_tags"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/filledTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="32dp"
             android:hint="Enter something">
 
@@ -101,7 +107,8 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
-            android:backgroundTint="#4CAF50"
+            android:backgroundTint="#DDD83B"
+            android:textColor="@android:color/black"
             android:text="Save" />
 
 

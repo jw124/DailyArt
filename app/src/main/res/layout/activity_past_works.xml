@@ -16,14 +16,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:backgroundTint="#DDD83B"
-                android:text="Back"
-                android:textColor="@color/black"
-                android:id="@+id/back_button"/>
-
 
             <TextView
                 android:id="@+id/past_works_header"
