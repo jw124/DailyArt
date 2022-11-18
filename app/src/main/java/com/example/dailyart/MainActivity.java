@@ -16,6 +16,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -108,11 +109,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void setAlarm() {
         Calendar calender = Calendar.getInstance();
-        calender.add(Calendar.SECOND, 5);
+        calender.set(2022, 10, 17, 21, 27, 00);
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, calender.getTimeInMillis(), pendingIntent);
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calender.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
     private void createNotificationChannel() {
