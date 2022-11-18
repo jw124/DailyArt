@@ -19,7 +19,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:gravity="center"
             android:orientation="vertical">
 
@@ -27,26 +26,28 @@
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Achievements"
-                android:textSize="50dp"
+                android:textSize="40dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="16dp" />
+                android:layout_marginTop="15dp"
+                android:textStyle="bold"/>
 
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:drawableLeft="@drawable/cup"
                 android:gravity="center"
                 android:text="Share 5 Pictures!"
                 android:textSize="28dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
 
             <ProgressBar
                 android:id="@+id/pb1"
@@ -58,14 +59,16 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:drawableLeft="@drawable/cup"
                 android:gravity="center"
                 android:text="Add 1 Picture in Gallery!"
                 android:textSize="28dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
 
             <ProgressBar
                 android:id="@+id/pb2"
@@ -77,14 +80,16 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:drawableLeft="@drawable/cup"
                 android:gravity="center"
                 android:text="Continue 1 Week"
                 android:textSize="28dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
 
             <ProgressBar
                 android:id="@+id/pb3"
@@ -97,14 +102,16 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:drawableLeft="@drawable/cup"
                 android:gravity="center"
                 android:text="Share 25 Pictures!"
                 android:textSize="28dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
 
             <ProgressBar
                 android:id="@+id/pb4"
@@ -116,8 +123,10 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:drawableLeft="@drawable/cup"
                 android:gravity="center"
                 android:text="Add 10 Pictures in Gallery!"
@@ -134,8 +143,10 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:drawableLeft="@drawable/cup"
                 android:gravity="center"
                 android:text="Continue 1 month!"
@@ -153,8 +164,10 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:drawableLeft="@drawable/cup"
                 android:gravity="center"
                 android:text="Share 50 Pictures!"
@@ -172,8 +185,10 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:drawableLeft="@drawable/cup"
                 android:gravity="center"
                 android:text="Add 50 Pictures in Gallery!"
@@ -191,8 +206,10 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:drawableLeft="@drawable/cup"
                 android:gravity="center"
                 android:text="Continue 3 months!"

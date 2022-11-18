@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         welcomeView = (TextView) findViewById(R.id.welcome_view);
-        welcomeView.setText("Welcome, " + userID + "!");
+        welcomeView.setText("Welcome! User ID: " + userID + ".");
     }
 
     private void setAlarm() {
