@@ -360,7 +360,8 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
         sharingIntent.setType("image/jpeg");
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,"Subject Here");
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-        sharingIntent.putExtra(android.content.Intent.EXTRA_STREAM,ImageUri);
+//        Log.d("BAD_PATH", ImageUri.toString().replaceAll("file://","content://"));
+        sharingIntent.putExtra(android.content.Intent.EXTRA_STREAM,Uri.parse(ImageUri.toString().replaceAll("file://","content://")));
         sharingIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
