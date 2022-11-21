@@ -6,6 +6,7 @@ import androidx.core.content.FileProvider;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -50,6 +51,7 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
     private Button ShareButton;
     private Button SaveButton;
     private ProgressBar mypb;
+    private SharedPreferences sharedPref;
 
     // One Preview Image
     ImageView IVPreviewImage;
@@ -82,7 +84,7 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
 
         setContentView(R.layout.activity_upload);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        sharedPref = getSharedPreferences("CurrentUserID", MODE_PRIVATE);
 
         // register the UI widgets with their appropriate IDs
         AlbumButton = (Button)findViewById(R.id.Album);
@@ -128,11 +130,20 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
             share();
         } else if(v.getId() == R.id.Milestone) {
             isMileStone = !isMileStone;
+
+            SharedPreferences.Editor editor = sharedPref.edit();
+            int galleryCount = sharedPref.getInt("GalleryCount", 0);
+
             if(isMileStone){
                 MileStoneButton.setBackgroundColor(Color.GRAY);
+                editor.putInt("GalleryCount", galleryCount + 1);
             }else{
                 MileStoneButton.setBackgroundColor(Color.parseColor("#DDD83B"));
+                editor.putInt("GalleryCount", galleryCount - 1);
             }
+
+            editor.apply();
+
         } else if(v.getId() == R.id.Gallery) {
             openCamera();
         }
@@ -355,6 +366,11 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
 
     // share function (image + text)
     private void share() {
+        SharedPreferences.Editor editor = sharedPref.edit();
+        int shareCount = sharedPref.getInt("ShareCount", 0);
+        editor.putInt("ShareCount", shareCount + 1);
+        editor.apply();
+
         String shareBody = Comment.getText().toString();
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("image/jpeg");

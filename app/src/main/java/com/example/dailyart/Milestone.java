@@ -17,7 +17,7 @@ import com.example.dailyart.R;
 
 public class Milestone extends AppCompatActivity {
     Button galleryButton,achievementsButton;
-    ProgressBar mypb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,11 +60,5 @@ public class Milestone extends AppCompatActivity {
                 break;
         }
         return true;
-    }
-
-    public void load(View view) {
-        int progress=mypb.getProgress();
-        progress=10;
-        mypb.setProgress(progress);
     }
 }

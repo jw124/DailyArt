@@ -50,11 +50,11 @@
                 android:layout_marginRight="10dp"/>
 
             <ProgressBar
-                android:id="@+id/pb1"
+                android:id="@+id/share_5_bar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:progress="100"
+                android:progress="0"
                 android:max="100" />
 
             <TextView
@@ -63,7 +63,7 @@
                 android:layout_marginTop="20dp"
                 android:drawableLeft="@drawable/cup"
                 android:gravity="center"
-                android:text="Add 1 Picture in Gallery!"
+                android:text="Add 5 Pictures in Gallery!"
                 android:textSize="28dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -71,11 +71,11 @@
                 android:layout_marginRight="10dp" />
 
             <ProgressBar
-                android:id="@+id/pb2"
+                android:id="@+id/add_5_bar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:progress="100"
+                android:progress="0"
                 android:max="100" />
 
             <TextView
@@ -92,11 +92,11 @@
                 android:layout_marginRight="10dp" />
 
             <ProgressBar
-                android:id="@+id/pb3"
+                android:id="@+id/week_1_bar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:progress="57"
+                android:progress="15"
                 android:max="100" />
 
 
@@ -114,11 +114,11 @@
                 android:layout_marginRight="10dp"/>
 
             <ProgressBar
-                android:id="@+id/pb4"
+                android:id="@+id/share_25_bar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="350dp"
                 android:layout_height="match_parent"
-                android:progress="20"
+                android:progress="0"
                 android:max="100" />
 
             <TextView
@@ -135,7 +135,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ProgressBar
-                android:id="@+id/pb5"
+                android:id="@+id/add_10_bar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="350dp"
                 android:layout_height="match_parent"
@@ -149,17 +149,17 @@
                 android:layout_marginRight="10dp"
                 android:drawableLeft="@drawable/cup"
                 android:gravity="center"
-                android:text="Continue 1 month!"
+                android:text="Continue 1 Month!"
                 android:textSize="28dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ProgressBar
-                android:id="@+id/pb6"
+                android:id="@+id/month_1_bar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:progress="13"
+                android:progress="4"
                 android:max="100" />
 
             <TextView
@@ -176,11 +176,11 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ProgressBar
-                android:id="@+id/pb7"
+                android:id="@+id/share_50_bar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:progress="10"
+                android:progress="0"
                 android:max="100" />
 
             <TextView
@@ -197,11 +197,11 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ProgressBar
-                android:id="@+id/pb8"
+                android:id="@+id/add_50_bar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:progress="20"
+                android:progress="0"
                 android:max="100" />
 
             <TextView
@@ -212,17 +212,17 @@
                 android:layout_marginRight="10dp"
                 android:drawableLeft="@drawable/cup"
                 android:gravity="center"
-                android:text="Continue 3 months!"
+                android:text="Continue 3 Months!"
                 android:textSize="28dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ProgressBar
-                android:id="@+id/pb9"
+                android:id="@+id/month_3_bar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:progress="4"
+                android:progress="1"
                 android:max="100" />
 
 
