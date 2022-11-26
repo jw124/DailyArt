@@ -35,6 +35,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Random;
+import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity {
     private SharedPreferences sharedPref;
@@ -108,12 +109,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setAlarm() {
-        Calendar calender = Calendar.getInstance();
-        calender.set(2022, 10, 17, 21, 27, 00);
+        Calendar calender=Calendar.getInstance();
+        calender.set(2022, 10, 26, 13, 37, 50);
+        long systemTime = System.currentTimeMillis();
+        long selectTime = calender.getTimeInMillis();
+        if(systemTime > selectTime) {
+            calender.add(Calendar.DAY_OF_MONTH, 1);
+        }
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
         pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calender.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calender.getTimeInMillis(), pendingIntent);
     }
 
     private void createNotificationChannel() {

@@ -5,14 +5,25 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Upload"-->
+<!--        android:gravity="center"-->
+<!--        android:textStyle="bold"-->
+<!--        android:textSize="40sp"-->
+<!--        android:layout_marginTop="15dp"/>-->
+    <Button
+        android:id="@+id/Share"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:text="Upload"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textSize="40sp"
-        android:layout_marginTop="15dp"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="350dp"
+        android:backgroundTint="#DDD83B"
+
+        android:drawableEnd="@android:drawable/ic_menu_share"
+        android:textColor="@android:color/black"
+        android:textSize="12sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,62 +40,54 @@
             android:layout_marginEnd="16dp"
             android:background="#5C5B5B" />
 
-        <!--Button to open the image selector-->
+<!--        Button to open the image selector-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="50dp"
             android:gravity="center"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/Gallery"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="32dp"
                 android:layout_marginRight="10dp"
                 android:backgroundTint="#DDD83B"
                 android:text="Camera"
                 android:textColor="@android:color/black"
-                android:textSize="10sp" />
-
-            <Button
-                android:id="@+id/Milestone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="32dp"
-                android:layout_marginRight="10dp"
-                android:backgroundTint="#DDD83B"
-                android:text="milestone"
-                android:textColor="@android:color/black"
-                android:textSize="10sp" />
-
-            <Button
-                android:id="@+id/Share"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="32dp"
-                android:layout_marginRight="10dp"
-                android:backgroundTint="#DDD83B"
-                android:text="share"
-                android:textColor="@android:color/black"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
 
             <Button
                 android:id="@+id/Album"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="32dp"
+                android:layout_marginRight="10dp"
                 android:backgroundTint="#DDD83B"
                 android:text="Album"
                 android:textColor="@android:color/black"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
         </LinearLayout>
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Set the image as milestone"
+                android:gravity="left"
+                android:textStyle="bold"
+                android:textSize="20sp" />
+            <Switch
+                android:id="@+id/simpleSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
         <Spinner
             android:layout_width="match_parent"
             android:layout_gravity="center"
@@ -108,6 +111,10 @@
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
 
         <!--sample button to submit entered data
             inside from edit text-->

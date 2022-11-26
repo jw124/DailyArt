@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,11 +48,13 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
     // Buttons
     private Button AlbumButton;
     private Button GalleryButton;
-    private Button MileStoneButton;
+    //private Button MileStoneButton;
     private Button ShareButton;
     private Button SaveButton;
     private ProgressBar mypb;
     private SharedPreferences sharedPref;
+
+    private Switch simpleSwitch;
 
     // One Preview Image
     ImageView IVPreviewImage;
@@ -71,7 +74,7 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
     int SELECT_PICTURE = 200;
     int Camera = 300;
 
-    boolean isMileStone = false;
+//    boolean isMileStone = false;
 
     String tagPath = "General";
 
@@ -89,17 +92,18 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
         // register the UI widgets with their appropriate IDs
         AlbumButton = (Button)findViewById(R.id.Album);
         GalleryButton = (Button)findViewById(R.id.Gallery);
-        MileStoneButton = (Button)findViewById(R.id.Milestone);
+        //MileStoneButton = (Button)findViewById(R.id.Milestone);
         ShareButton = (Button)findViewById(R.id.Share);
         SaveButton = (Button)findViewById(R.id.Save);
         IVPreviewImage = (ImageView)findViewById(R.id.IVPreviewImage);
         Comment = (TextView)findViewById(R.id.edit_text);
+        simpleSwitch = (Switch)findViewById(R.id.simpleSwitch);
 
         // handle the Choose Image button to trigger
         // the image chooser function
         AlbumButton.setOnClickListener(this);
         GalleryButton.setOnClickListener(this);
-        MileStoneButton.setOnClickListener(this);
+        //MileStoneButton.setOnClickListener(this);
         ShareButton.setOnClickListener(this);
         SaveButton.setOnClickListener(this);
 
@@ -128,23 +132,25 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
             startActivity(intent);
         } else if(v.getId() == R.id.Share) {
             share();
-        } else if(v.getId() == R.id.Milestone) {
-            isMileStone = !isMileStone;
-
-            SharedPreferences.Editor editor = sharedPref.edit();
-            int galleryCount = sharedPref.getInt("GalleryCount", 0);
-
-            if(isMileStone){
-                MileStoneButton.setBackgroundColor(Color.GRAY);
-                editor.putInt("GalleryCount", galleryCount + 1);
-            }else{
-                MileStoneButton.setBackgroundColor(Color.parseColor("#DDD83B"));
-                editor.putInt("GalleryCount", galleryCount - 1);
-            }
-
-            editor.apply();
-
-        } else if(v.getId() == R.id.Gallery) {
+        }
+//        else if(v.getId() == R.id.Milestone) {
+//            isMileStone = !isMileStone;
+//
+//            SharedPreferences.Editor editor = sharedPref.edit();
+//            int galleryCount = sharedPref.getInt("GalleryCount", 0);
+//
+////            if(isMileStone){
+////                MileStoneButton.setBackgroundColor(Color.GRAY);
+////                editor.putInt("GalleryCount", galleryCount + 1);
+////            }else{
+////                MileStoneButton.setBackgroundColor(Color.parseColor("#DDD83B"));
+////                editor.putInt("GalleryCount", galleryCount - 1);
+////            }
+//
+//            editor.apply();
+//
+//        }
+        else if(v.getId() == R.id.Gallery) {
             openCamera();
         }
     }
@@ -234,7 +240,7 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
             File path = Environment.getExternalStorageDirectory();
             File dir = null;
             String finalDir;
-            if(isMileStone){
+            if(simpleSwitch.isChecked()){
                 finalDir = path + "/Daily Art/Files/MileStone";
                 dir = new File(finalDir);
                 dir.mkdirs();
@@ -275,7 +281,7 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
             File path = Environment.getExternalStorageDirectory();
             File dir = null;
             String finalDir;
-            if(isMileStone){
+            if(simpleSwitch.isChecked()){
                 finalDir = path + "/Daily Art/Files/MileStone";
                 dir = new File(finalDir);
                 //file name
