@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -23,6 +25,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -36,7 +39,10 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -53,6 +59,7 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
     private Button SaveButton;
     private ProgressBar mypb;
     private SharedPreferences sharedPref;
+    private ArrayList<String> userTags;// = new ArrayList<String>(Arrays.asList(new String[]{"General", "Normal", "+ New Tag"}));
 
     private Switch simpleSwitch;
 
@@ -82,13 +89,13 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String[] userTags = {"General","Normal"};
         setContentView(R.layout.activity_upload);
 
         setContentView(R.layout.activity_upload);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         sharedPref = getSharedPreferences("CurrentUserID", MODE_PRIVATE);
-
+        userTags = SharedPrefUtil.getStringList(getApplicationContext(),"USER_TAGS");
+        userTags.add("+ New Tag");
         // register the UI widgets with their appropriate IDs
         AlbumButton = (Button)findViewById(R.id.Album);
         GalleryButton = (Button)findViewById(R.id.Gallery);
@@ -114,6 +121,7 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(aa);
+        spinner.setSelection(0);
         spinner.setOnItemSelectedListener(this);
     }
 
@@ -407,13 +415,74 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         String selectedTag = (String) parent.getItemAtPosition(pos);
+        if (selectedTag.equalsIgnoreCase("+ New Tag")){
+            // open add tag dialog
+            Spinner spinner = (Spinner) findViewById(R.id.available_tags);
+            spinner.setSelection(0);
+            showNewTagAlertDialog(new View(getApplicationContext()));
+        } else {
+            this.tagPath = selectedTag;
+        }
 
-        this.tagPath = selectedTag;
+
 
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    public void showNewTagAlertDialog(View view) {
+
+        // Create an alert builder
+        AlertDialog.Builder builder
+                = new AlertDialog.Builder(this);
+        builder.setTitle("Name");
+
+        // set the custom layout
+        final View customLayout = getLayoutInflater().inflate(R.layout.new_tag_dialog,null);
+        builder.setView(customLayout);
+
+        // add a button
+        builder.setPositiveButton(
+                "OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        EditText editText = customLayout.findViewById(R.id.new_tag_edit_text);
+                        addNewTag(editText.getText().toString());
+                    }
+                });
+
+        builder.setNeutralButton(
+                "CANCEL",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) { }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    // Do something with the data
+    // coming from the AlertDialog
+    private void addNewTag(String data) {
+        userTags.add(0,data);
+        ArrayList<String> tmpList = new ArrayList<>();
+        tmpList.addAll(userTags);
+        tmpList.remove("+ New Tag");
+        SharedPrefUtil.saveStringList(getApplicationContext(),tmpList,"USER_TAGS");
+        Spinner spinner = (Spinner) findViewById(R.id.available_tags);
+        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,userTags);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner.setAdapter(aa);
+        spinner.setSelection(0);
+        Toast.makeText(this,
+                        data + " added to tag list",
+                        Toast.LENGTH_SHORT)
+                .show();
     }
 }
