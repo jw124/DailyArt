@@ -24,7 +24,7 @@ import java.util.Date;
 public class PastWorkActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     TagView tv;
 //    String[] userTags = {"MileStone", "General","Normal"};
-    String[] userTags = {"General","Normal"};
+    ArrayList<String> userTags;
     private ProgressBar mypb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +32,7 @@ public class PastWorkActivity extends AppCompatActivity implements AdapterView.O
         setContentView(R.layout.activity_past_works); //setContentView(R.layout.activity_past_works);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        userTags = SharedPrefUtil.getStringList(getBaseContext(),"USER_TAGS");
 
         tv = (TagView) findViewById(R.id.interactive_gallery);
 
@@ -49,10 +50,10 @@ public class PastWorkActivity extends AppCompatActivity implements AdapterView.O
 
     }
 
-    private void displayImages(String[] tagsArr){
+    private void displayImages(ArrayList<String> tagsArr){
         ArrayList<ArtworkModel> ams = new ArrayList<ArtworkModel>();
-        for (int i = 0; i < tagsArr.length; i++){
-            String currDir = Environment.getExternalStorageDirectory().toString() + "/Daily Art/Files/" + tagsArr[i] + "/";
+        for (int i = 0; i < tagsArr.size(); i++){
+            String currDir = Environment.getExternalStorageDirectory().toString() + "/Daily Art/Files/" + tagsArr.get(i) + "/";
             File directory = new File(currDir);
             File[] files = directory.listFiles();
             if (files != null) {
@@ -64,7 +65,7 @@ public class PastWorkActivity extends AppCompatActivity implements AdapterView.O
                         ams.add(new ArtworkModel("image " + j,
                                 currDir + files[j].getName(),
                                 "This is a good art",
-                                new ArrayList<String>(Arrays.asList(tagsArr)),
+                                tagsArr,
                                 new Date(),
                                 currDir + files[j].getName().substring(0, files[j].getName().lastIndexOf('.')) + ".txt"));
                     }
@@ -87,7 +88,7 @@ public class PastWorkActivity extends AppCompatActivity implements AdapterView.O
         Toast.makeText(getApplicationContext(),selectedTag,Toast.LENGTH_SHORT).show();
 
         Log.d("SELECTED TAG", "selected callback invoked");
-        String[] tagsArr = {selectedTag};
+        ArrayList<String> tagsArr = new ArrayList<String>(Arrays.asList(new String[]{selectedTag}));
         this.displayImages(tagsArr);
 
 

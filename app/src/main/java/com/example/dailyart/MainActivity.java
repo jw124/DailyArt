@@ -16,6 +16,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -33,7 +34,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 import java.util.TimeZone;
 
@@ -43,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView welcomeView;
     private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
+    private TagView tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
         int promptIndex = 0;
         sharedPref = getSharedPreferences("CurrentUserID", MODE_PRIVATE);
         userID = sharedPref.getString("UserID", "");
+        tv = (TagView) findViewById(R.id.interactive_gallery);
+        String[] userTags = {"MileStone"};
+        this.displayImages(userTags);
 
         TextView randomPrompt = (TextView) findViewById(R.id.generated_prompt);
         randomPrompt.setOnClickListener(new View.OnClickListener() {
@@ -134,6 +142,32 @@ public class MainActivity extends AppCompatActivity {
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
+    }
+
+    private void displayImages(String[] tagsArr){
+        ArrayList<ArtworkModel> ams = new ArrayList<ArtworkModel>();
+        for (int i = 0; i < tagsArr.length; i++){
+            String currDir = Environment.getExternalStorageDirectory().toString() + "/Daily Art/Files/" + tagsArr[i] + "/";
+            File directory = new File(currDir);
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (int j = 0; j < files.length; j++) {
+                    if (files[j].getName().endsWith(".jpg") ||
+                            files[j].getName().endsWith(".jpg") ||
+                            files[j].getName().endsWith(".png")) {
+                        Log.d("IMAGE PATH", files[i].getName());
+                        ams.add(new ArtworkModel("image " + j,
+                                currDir + files[j].getName(),
+                                "This is a good art",
+                                new ArrayList<String>(Arrays.asList(tagsArr)),
+                                new Date(),
+                                currDir + files[j].getName().substring(0, files[j].getName().lastIndexOf('.')) + ".txt"));
+                    }
+                }
+            }
+        }
+        TagViewAdapter tva = new TagViewAdapter(this, ams);
+        tv.setGalleryAdapter(tva);
     }
 
     public void generateID() {

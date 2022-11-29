@@ -100,4 +100,25 @@
         android:layout_marginTop="20dp"/>
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Previous Works"
+            android:textSize="30sp"
+            android:gravity="center"
+            />
+
+        <com.example.dailyart.TagView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/interactive_gallery"/>
+    </LinearLayout>
+
+
 </LinearLayout>
