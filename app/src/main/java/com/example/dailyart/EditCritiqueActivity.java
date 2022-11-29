@@ -1,6 +1,7 @@
 package com.example.dailyart;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -29,9 +30,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import android.content.DialogInterface;
+
 public class EditCritiqueActivity extends AppCompatActivity {
     private ProgressBar mypb;
     private TextInputEditText et;
+    private Uri critique_file;
+    private Uri image_file;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +50,7 @@ public class EditCritiqueActivity extends AppCompatActivity {
         ImageView iv = (ImageView) findViewById(R.id.focused_image);
         et = (TextInputEditText) findViewById(R.id.edit_critique_text);
         Button save = (Button) findViewById(R.id.save_button);
+        Button delete = (Button) findViewById(R.id.delete_button);
         Intent iin= getIntent();
         Bundle b = iin.getExtras();
 
@@ -52,25 +59,74 @@ public class EditCritiqueActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(b!=null)
                 {
-                    Uri critique_file = (Uri) b.get("CRITIQUE_FILEPATH");
+                    critique_file = (Uri) b.get("CRITIQUE_FILEPATH");
                     saveCommentToFile(critique_file.toString());
                 }
             }
         });
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //delete image and comment
+                if (critique_file != null && image_file != null) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(EditCritiqueActivity.this);
 
+                    builder.setCancelable(true);
+                    builder.setTitle("Confirm to delete image and critique");
+                    builder.setMessage("This is an Alert Dialog's Message");
+
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            String critiqueFilePath = critique_file.getPath();
+                            String imageFilePath = image_file.getPath();
+                            File critiqueFile = new File(critiqueFilePath);
+                            File imageFile = new File(imageFilePath);
+                            if (critiqueFile.exists()) {
+                                if (critiqueFile.delete()) {
+                                    System. out. println("file Deleted :" + critiqueFile);
+                                } else {
+                                    System. out. println("file not Deleted :" + critiqueFile);
+                                }
+                            }
+                            if (imageFile.exists()) {
+                                if (imageFile.delete()) {
+                                    System. out. println("file Deleted :" + imageFile);
+                                } else {
+                                    System. out. println("file not Deleted :" + imageFile);
+                                }
+                            }
+                            Intent returnBtn = new Intent(getApplicationContext(),
+                                    MainActivity.class);
+
+                            startActivity(returnBtn);
+                        }
+                    });
+                    builder.show();
+                }
+                }
+            });
 
 
         if(b!=null)
         {
-            Uri image_file = (Uri) b.get("IMAGE_FILEPATH");
+            image_file = (Uri) b.get("IMAGE_FILEPATH");
             Log.d("RECEIVED PATH", image_file.toString());
             iv.setImageURI(image_file);
 
-            Uri critique_file = (Uri) b.get("CRITIQUE_FILEPATH");
+            critique_file = (Uri) b.get("CRITIQUE_FILEPATH");
             String currCritique = readFromFile(getApplicationContext(),critique_file.toString());
             et.setText(currCritique);
         }
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

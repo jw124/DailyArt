@@ -5,14 +5,6 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Upload"-->
-<!--        android:gravity="center"-->
-<!--        android:textStyle="bold"-->
-<!--        android:textSize="40sp"-->
-<!--        android:layout_marginTop="15dp"/>-->
     <Button
         android:id="@+id/Share"
         android:layout_width="60dp"
@@ -88,12 +80,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
-        <Spinner
+<!--        todo: set a boundary for the spinner box-->
+
+        <View
+            android:layout_height="5px"
             android:layout_width="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
+            android:background="#66CCFF"
+            />
+        <Spinner
+            android:id="@+id/available_tags"
+            android:layout_width="346dp"
             android:layout_height="wrap_content"
-            android:id="@+id/available_tags"/>
+            android:layout_gravity="center"
+            android:backgroundTint="#CF1111"
+            android:gravity="center" />
+        <View
+            android:layout_height="5px"
+            android:layout_width="match_parent"
+            android:background="#66CCFF"
+            />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/filledTextField"
