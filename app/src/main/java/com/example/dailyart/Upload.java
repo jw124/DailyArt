@@ -60,7 +60,7 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
     private ProgressBar mypb;
     private SharedPreferences sharedPref;
     private ArrayList<String> userTags;// = new ArrayList<String>(Arrays.asList(new String[]{"General", "Normal", "+ New Tag"}));
-
+    private ArrayList<String> spinnerItems;
     private Switch simpleSwitch;
 
     // One Preview Image
@@ -95,7 +95,10 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         sharedPref = getSharedPreferences("CurrentUserID", MODE_PRIVATE);
         userTags = SharedPrefUtil.getStringList(getApplicationContext(),"USER_TAGS");
-        userTags.add("+ New Tag");
+        spinnerItems = new ArrayList<String>(userTags);
+        spinnerItems.add("+ New Tag");
+        spinnerItems.add("- Delete Tag");
+        spinnerItems.remove("General");
         // register the UI widgets with their appropriate IDs
         AlbumButton = (Button)findViewById(R.id.Album);
         GalleryButton = (Button)findViewById(R.id.Gallery);
@@ -117,7 +120,7 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
         //Drop down menu
         Spinner spinner = (Spinner) findViewById(R.id.available_tags);
 
-        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,userTags);
+        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,spinnerItems);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(aa);
@@ -250,28 +253,14 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
             String finalDir;
             if(simpleSwitch.isChecked()){
                 finalDir = path + "/Daily Art/Files/MileStone";
-                dir = new File(finalDir);
-                dir.mkdirs();
-                //file name
-                String fileName = timeStamp+".txt";
-                File file = new File(dir,fileName);
-                FileWriter fw = new FileWriter(file.getAbsoluteFile());
-                BufferedWriter bw = new BufferedWriter(fw);
-                bw.write(Comment.getText().toString());
-                bw.close();
+                saveCritiqueFileStream(finalDir,timeStamp);
+
             }
             finalDir = path + "/Daily Art/Files/" + this.tagPath;
-            dir = new File(finalDir);
-
-            dir.mkdirs();
-            //file name
-            String fileName = timeStamp+".txt";
-            File file = new File(dir,fileName);
-            FileWriter fw = new FileWriter(file.getAbsoluteFile());
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(Comment.getText().toString());
-            bw.close();
+            saveCritiqueFileStream(finalDir,timeStamp);
+            saveCritiqueFileStream(path + "/Daily Art/Files/General",timeStamp);
             //Toast
+            String fileName = timeStamp+ ".jpg";
             Toast.makeText(this,fileName+" File saved in :"+dir,Toast.LENGTH_SHORT).show();
             return finalDir + "/" + fileName;
         } catch (IOException e) {
@@ -291,35 +280,12 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
             String finalDir;
             if(simpleSwitch.isChecked()){
                 finalDir = path + "/Daily Art/Files/MileStone";
-                dir = new File(finalDir);
-                //file name
-                String fileName = timeStamp+".jpg";
-                File file = new File(dir,fileName);
-
-                FileOutputStream fos = new FileOutputStream(file);
-                File image= new File(ImagePath);
-                byte[] bytes = getBytesFromFile(image);
-                fos.write(bytes);
-                fos.close();
-                //Toast
-//                Toast.makeText(this,fileName+" File saved in :"+dir,Toast.LENGTH_SHORT).show();
-
+                saveImageFileStream(finalDir,timeStamp);
             }
             finalDir = path + "/Daily Art/Files/" + this.tagPath;
-            dir = new File(finalDir);
-
-            dir.mkdirs();
-            //file name
+            saveImageFileStream(finalDir,timeStamp);
+            saveImageFileStream(path + "/Daily Art/Files/General",timeStamp);
             String fileName = timeStamp+".jpg";
-            File file = new File(dir,fileName);
-
-            FileOutputStream fos = new FileOutputStream(file);
-            File image= new File(ImagePath);
-            byte[] bytes = getBytesFromFile(image);
-            fos.write(bytes);
-            fos.close();
-            //Toast
-            Toast.makeText(this,fileName+" File saved in :"+dir,Toast.LENGTH_SHORT).show();
             return finalDir + "/" + fileName;
         } catch (IOException e) {
             e.printStackTrace();
@@ -327,6 +293,37 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
             return "";
         }
 
+    }
+
+    private void saveImageFileStream(String savePath, String timeStamp) throws IOException{
+        File dir = new File(savePath);
+
+        dir.mkdirs();
+        //file name
+        String fileName = timeStamp+".jpg";
+        File file = new File(dir,fileName);
+
+        FileOutputStream fos = new FileOutputStream(file);
+        File image= new File(ImagePath);
+        byte[] bytes = getBytesFromFile(image);
+        fos.write(bytes);
+        fos.close();
+        //Toast
+        Toast.makeText(this,fileName+" File saved in :"+dir,Toast.LENGTH_SHORT).show();
+
+
+    }
+
+    private void saveCritiqueFileStream(String savePath, String timeStamp) throws IOException{
+        File dir = new File(savePath);
+        dir.mkdirs();
+        //file name
+        String fileName = timeStamp+".txt";
+        File file = new File(dir,fileName);
+        FileWriter fw = new FileWriter(file.getAbsoluteFile());
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write(Comment.getText().toString());
+        bw.close();
     }
 
     private byte[] getBytesFromFile(File file) throws IOException {
@@ -420,12 +417,13 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
             Spinner spinner = (Spinner) findViewById(R.id.available_tags);
             spinner.setSelection(0);
             showNewTagAlertDialog(new View(getApplicationContext()));
+        } else if (selectedTag.equalsIgnoreCase("- Delete Tag")) {
+            Spinner spinner = (Spinner) findViewById(R.id.available_tags);
+            spinner.setSelection(0);
+            showDeleteTagAlertDialog(new View(getApplicationContext()));
         } else {
             this.tagPath = selectedTag;
         }
-
-
-
     }
 
     @Override
@@ -441,7 +439,7 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
         builder.setTitle("New Tag");
 
         // set the custom layout
-        final View customLayout = getLayoutInflater().inflate(R.layout.new_tag_dialog,null);
+        View customLayout = getLayoutInflater().inflate(R.layout.new_tag_dialog,null);
         builder.setView(customLayout);
 
         // add a button
@@ -466,23 +464,87 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
         dialog.show();
     }
 
-    // Do something with the data
-    // coming from the AlertDialog
+    public void showDeleteTagAlertDialog(View view) {
+
+        // Create an alert builder
+        AlertDialog.Builder builder
+                = new AlertDialog.Builder(this);
+        builder.setTitle("New Tag");
+
+        // set the custom layout
+        View customLayout = getLayoutInflater().inflate(R.layout.delete_tag_dialog,null);
+        builder.setView(customLayout);
+        Spinner tagSpinner = (Spinner) customLayout.findViewById(R.id.delete_tags_spinner);
+        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,spinnerItems);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        tagSpinner.setAdapter(aa);
+        tagSpinner.setSelection(0);
+
+        tagSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        // add a button
+        builder.setPositiveButton(
+                "DELETE TAG",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String tagToDelete = (String) tagSpinner.getSelectedItem();
+                        if (tagToDelete.equals("General")){
+                            Toast.makeText(getApplicationContext(), "Cannot delete General gallery", Toast.LENGTH_SHORT).show();
+                        } else {
+                            deleteTag(tagToDelete);
+                        }
+                    }
+                });
+
+        builder.setNeutralButton(
+                "CANCEL",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) { }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     private void addNewTag(String data) {
         userTags.add(0,data);
-        ArrayList<String> tmpList = new ArrayList<>();
-        tmpList.addAll(userTags);
-        tmpList.remove("+ New Tag");
-        SharedPrefUtil.saveStringList(getApplicationContext(),tmpList,"USER_TAGS");
+        spinnerItems.add(0,data);
+        SharedPrefUtil.saveStringList(getApplicationContext(),userTags,"USER_TAGS");
         Spinner spinner = (Spinner) findViewById(R.id.available_tags);
-        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,userTags);
+        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,spinnerItems);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(aa);
         spinner.setSelection(0);
-        Toast.makeText(this,
-                        data + " added to tag list",
-                        Toast.LENGTH_SHORT)
-                .show();
+        Toast.makeText(this, data + " added to tag list", Toast.LENGTH_SHORT).show();
     }
+
+    private void deleteTag(String data){
+        userTags.remove(data);
+        spinnerItems.remove(data);
+        SharedPrefUtil.saveStringList(getApplicationContext(),userTags,"USER_TAGS");
+        Spinner spinner = (Spinner) findViewById(R.id.available_tags);
+        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,spinnerItems);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner.setAdapter(aa);
+        spinner.setSelection(0);
+        Toast.makeText(this, data + " removed from tag list", Toast.LENGTH_SHORT).show();
+    }
+
+
+
 }
