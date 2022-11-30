@@ -37,12 +37,13 @@
 
 
             <TextView
+                android:id="@+id/upload_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="50dp"
                 android:drawableLeft="@drawable/cup"
                 android:gravity="center"
-                android:text="Share 5 Pictures!"
+                android:text="Upload 10 Works!"
                 android:textSize="28dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -50,7 +51,7 @@
                 android:layout_marginRight="10dp"/>
 
             <ProgressBar
-                android:id="@+id/share_5_bar"
+                android:id="@+id/upload_bar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
@@ -58,12 +59,13 @@
                 android:max="100" />
 
             <TextView
+                android:id="@+id/milestone_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:drawableLeft="@drawable/cup"
                 android:gravity="center"
-                android:text="Add 5 Pictures in Gallery!"
+                android:text="Set 5 Milestones!"
                 android:textSize="28dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -71,7 +73,7 @@
                 android:layout_marginRight="10dp" />
 
             <ProgressBar
-                android:id="@+id/add_5_bar"
+                android:id="@+id/milestone_bar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
@@ -79,34 +81,13 @@
                 android:max="100" />
 
             <TextView
+                android:id="@+id/share_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:drawableLeft="@drawable/cup"
                 android:gravity="center"
-                android:text="Continue 1 Week"
-                android:textSize="28dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp" />
-
-            <ProgressBar
-                android:id="@+id/week_1_bar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:progress="15"
-                android:max="100" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:drawableLeft="@drawable/cup"
-                android:gravity="center"
-                android:text="Share 25 Pictures!"
+                android:text="Share 5 Works!"
                 android:textSize="28dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -114,117 +95,12 @@
                 android:layout_marginRight="10dp"/>
 
             <ProgressBar
-                android:id="@+id/share_25_bar"
+                android:id="@+id/share_bar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="350dp"
                 android:layout_height="match_parent"
                 android:progress="0"
                 android:max="100" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:drawableLeft="@drawable/cup"
-                android:gravity="center"
-                android:text="Add 10 Pictures in Gallery!"
-                android:textSize="28dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ProgressBar
-                android:id="@+id/add_10_bar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="350dp"
-                android:layout_height="match_parent"
-                android:max="100" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:drawableLeft="@drawable/cup"
-                android:gravity="center"
-                android:text="Continue 1 Month!"
-                android:textSize="28dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ProgressBar
-                android:id="@+id/month_1_bar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:progress="4"
-                android:max="100" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:drawableLeft="@drawable/cup"
-                android:gravity="center"
-                android:text="Share 50 Pictures!"
-                android:textSize="28dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ProgressBar
-                android:id="@+id/share_50_bar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:progress="0"
-                android:max="100" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:drawableLeft="@drawable/cup"
-                android:gravity="center"
-                android:text="Add 50 Pictures in Gallery!"
-                android:textSize="28dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ProgressBar
-                android:id="@+id/add_50_bar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:progress="0"
-                android:max="100" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:drawableLeft="@drawable/cup"
-                android:gravity="center"
-                android:text="Continue 3 Months!"
-                android:textSize="28dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ProgressBar
-                android:id="@+id/month_3_bar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:progress="1"
-                android:max="100" />
-
 
         </LinearLayout>
     </ScrollView>
