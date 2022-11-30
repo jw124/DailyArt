@@ -33,6 +33,10 @@ public class PastWorkActivity extends AppCompatActivity implements AdapterView.O
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         userTags = SharedPrefUtil.getStringList(getBaseContext(),"USER_TAGS");
+        if(userTags == null){
+            userTags = new ArrayList<String>(Arrays.asList(new String[]{"General", "MileStone"}));
+            SharedPrefUtil.saveStringList(getApplicationContext(),userTags,"USER_TAGS");
+        }
 
         tv = (TagView) findViewById(R.id.interactive_gallery);
 

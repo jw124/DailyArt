@@ -95,6 +95,10 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         sharedPref = getSharedPreferences("CurrentUserID", MODE_PRIVATE);
         userTags = SharedPrefUtil.getStringList(getApplicationContext(),"USER_TAGS");
+        if(userTags == null){
+            userTags = new ArrayList<String>(Arrays.asList(new String[]{"General", "MileStone"}));
+            SharedPrefUtil.saveStringList(getApplicationContext(),userTags,"USER_TAGS");
+        }
         spinnerItems = new ArrayList<String>(userTags);
         spinnerItems.add("+ New Tag");
         spinnerItems.add("- Delete Tag");
