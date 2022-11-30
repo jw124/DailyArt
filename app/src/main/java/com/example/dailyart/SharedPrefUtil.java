@@ -23,7 +23,10 @@ public class SharedPrefUtil {
 
     public static ArrayList<String> getStringList(Context ctx, String prefName){
         SharedPreferences sharedPreferences = ctx.getSharedPreferences(prefName, Context.MODE_PRIVATE);
-        String values =  sharedPreferences.getString(prefName, "");
+        String values =  sharedPreferences.getString(prefName, null);
+        if (values == null){
+            return null;
+        }
         return new ArrayList<String>(Arrays.asList(values.split(",")));
     }
 }
