@@ -102,7 +102,9 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
         spinnerItems = new ArrayList<String>(userTags);
         spinnerItems.add("+ New Tag");
         spinnerItems.add("- Delete Tag");
+        spinnerItems.add(0,"<None>");
         spinnerItems.remove("General");
+        spinnerItems.remove("MileStone");
         // register the UI widgets with their appropriate IDs
         AlbumButton = (Button)findViewById(R.id.Album);
         GalleryButton = (Button)findViewById(R.id.Gallery);
@@ -258,10 +260,11 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
             if(simpleSwitch.isChecked()){
                 finalDir = path + "/Daily Art/Files/MileStone";
                 saveCritiqueFileStream(finalDir,timeStamp);
-
             }
             finalDir = path + "/Daily Art/Files/" + this.tagPath;
-            saveCritiqueFileStream(finalDir,timeStamp);
+            if (!this.tagPath.equals("<None>")) {
+                saveCritiqueFileStream(finalDir, timeStamp);
+            }
             saveCritiqueFileStream(path + "/Daily Art/Files/General",timeStamp);
             //Toast
             String fileName = timeStamp+ ".jpg";
@@ -287,7 +290,9 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
                 saveImageFileStream(finalDir,timeStamp);
             }
             finalDir = path + "/Daily Art/Files/" + this.tagPath;
-            saveImageFileStream(finalDir,timeStamp);
+            if (!this.tagPath.equals("<None>")) {
+                saveImageFileStream(finalDir, timeStamp);
+            }
             saveImageFileStream(path + "/Daily Art/Files/General",timeStamp);
             String fileName = timeStamp+".jpg";
             return finalDir + "/" + fileName;
