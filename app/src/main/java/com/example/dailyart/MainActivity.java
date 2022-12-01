@@ -53,16 +53,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        createNotificationChannel();
-//        setAlarm();
+        // createNotificationChannel();
+        // setAlarm();
+        ArrayList<String> userTags = SharedPrefUtil.getStringList(getApplicationContext(),"USER_TAGS");
+        if(userTags == null){
+            userTags = new ArrayList<String>(Arrays.asList(new String[]{"General", "MileStone"}));
+            SharedPrefUtil.saveStringList(getApplicationContext(),userTags,"USER_TAGS");
+        }
 
         String [] prompts = {"Waterfall", "Mountains", "Birds", "Streetscape"};
         int promptIndex = 0;
         sharedPref = getSharedPreferences("CurrentUserID", MODE_PRIVATE);
         userID = sharedPref.getString("UserID", "");
         tv = (TagView) findViewById(R.id.interactive_gallery);
-        String[] userTags = {"MileStone"};
-        this.displayImages(userTags);
+        String[] milestones = {"MileStone"};
+        this.displayImages(milestones);
 
         TextView randomPrompt = (TextView) findViewById(R.id.generated_prompt);
         randomPrompt.setOnClickListener(new View.OnClickListener() {
