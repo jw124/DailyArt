@@ -53,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        createNotificationChannel();
-        setAlarm();
+//        createNotificationChannel();
+//        setAlarm();
 
         String [] prompts = {"Waterfall", "Mountains", "Birds", "Streetscape"};
         int promptIndex = 0;
@@ -236,11 +236,11 @@ public class MainActivity extends AppCompatActivity {
         if(v.getId() == R.id.profile_button){
             intent = new Intent(this, ProfileActivity.class);
         } else if(v.getId() == R.id.settings_button){
-            intent = new Intent(this, SettingsActivity.class);
+            intent = new Intent(this, Notification.class);
         } else if (v.getId() == R.id.past_works_button){
             intent = new Intent(this, PastWorkActivity.class);
-        } else if (v.getId() == R.id.milestone_button){
-            intent = new Intent(this,Milestone.class);
+        } else if (v.getId() == R.id.achievemnets_button){
+            intent = new Intent(this,Achievements.class);
         }
         startActivity(intent);
     }
