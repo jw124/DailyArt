@@ -93,11 +93,14 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
 
         setContentView(R.layout.activity_upload);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        SharedPreferences sharedPref = getSharedPreferences("CurrentUserID", MODE_PRIVATE);
+
         sharedPref = getSharedPreferences("CurrentUserID", MODE_PRIVATE);
-        userTags = SharedPrefUtil.getStringList(getApplicationContext(),"USER_TAGS");
+        String userID = sharedPref.getString("UserID", "");
+        userTags = SharedPrefUtil.getStringList(getApplicationContext(),"USER_TAGS_"+userID);
         if(userTags == null){
             userTags = new ArrayList<String>(Arrays.asList(new String[]{"General", "MileStone"}));
-            SharedPrefUtil.saveStringList(getApplicationContext(),userTags,"USER_TAGS");
+            SharedPrefUtil.saveStringList(getApplicationContext(),userTags,"USER_TAGS_"+userID);
         }
         spinnerItems = new ArrayList<String>(userTags);
         spinnerItems.add("+ New Tag");
@@ -249,6 +252,8 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
     }
 
     private String saveCommentToFile(String timeStamp){
+        SharedPreferences sharedPref = getSharedPreferences("CurrentUserID", MODE_PRIVATE);
+        String userID = sharedPref.getString("UserID", "");
         if(Comment.getText()==null || Comment.getText().toString()==""){
             Toast.makeText(this,"Input the comment Before Save",Toast.LENGTH_SHORT).show();
             return "";
@@ -258,14 +263,14 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
             File dir = null;
             String finalDir;
             if(simpleSwitch.isChecked()){
-                finalDir = path + "/Daily Art/Files/MileStone";
+                finalDir = path + "/Daily Art/Files/"+ "user_"+ userID +"/" +"MileStone";
                 saveCritiqueFileStream(finalDir,timeStamp);
             }
-            finalDir = path + "/Daily Art/Files/" + this.tagPath;
+            finalDir = path + "/Daily Art/Files/" + "user_"+ userID +"/" + this.tagPath;
             if (!this.tagPath.equals("<None>")) {
                 saveCritiqueFileStream(finalDir, timeStamp);
             }
-            saveCritiqueFileStream(path + "/Daily Art/Files/General",timeStamp);
+            saveCritiqueFileStream(path + "/Daily Art/Files/" + "user_"+ userID +"/" +"General",timeStamp);
             //Toast
             String fileName = timeStamp+ ".jpg";
             Toast.makeText(this,fileName+" File saved in :"+dir,Toast.LENGTH_SHORT).show();
@@ -277,6 +282,8 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
         }
     }
     private String saveImageToFile(String timeStamp){
+        SharedPreferences sharedPref = getSharedPreferences("CurrentUserID", MODE_PRIVATE);
+        String userID = sharedPref.getString("UserID", "");
         if(ImagePath==null || ImagePath==""){
             Toast.makeText(this,"Choose an Image Before Save",Toast.LENGTH_SHORT).show();
             return "";
@@ -286,14 +293,14 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
             File dir = null;
             String finalDir;
             if(simpleSwitch.isChecked()){
-                finalDir = path + "/Daily Art/Files/MileStone";
+                finalDir = path + "/Daily Art/Files/"+ "user_"+ userID +"/" +"MileStone";
                 saveImageFileStream(finalDir,timeStamp);
             }
-            finalDir = path + "/Daily Art/Files/" + this.tagPath;
+            finalDir = path + "/Daily Art/Files/" + "user_"+ userID +"/" + this.tagPath;
             if (!this.tagPath.equals("<None>")) {
                 saveImageFileStream(finalDir, timeStamp);
             }
-            saveImageFileStream(path + "/Daily Art/Files/General",timeStamp);
+            saveImageFileStream(path + "/Daily Art/Files/" + "user_"+ userID +"/" +"General",timeStamp);
             String fileName = timeStamp+".jpg";
             return finalDir + "/" + fileName;
         } catch (IOException e) {
@@ -530,9 +537,11 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
     }
 
     private void addNewTag(String data) {
+        SharedPreferences sharedPref = getSharedPreferences("CurrentUserID", MODE_PRIVATE);
+        String userID = sharedPref.getString("UserID", "");
         userTags.add(0,data);
         spinnerItems.add(0,data);
-        SharedPrefUtil.saveStringList(getApplicationContext(),userTags,"USER_TAGS");
+        SharedPrefUtil.saveStringList(getApplicationContext(),userTags,"USER_TAGS_"+userID);
         Spinner spinner = (Spinner) findViewById(R.id.available_tags);
         ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,spinnerItems);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -543,9 +552,11 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
     }
 
     private void deleteTag(String data){
+        SharedPreferences sharedPref = getSharedPreferences("CurrentUserID", MODE_PRIVATE);
+        String userID = sharedPref.getString("UserID", "");
         userTags.remove(data);
         spinnerItems.remove(data);
-        SharedPrefUtil.saveStringList(getApplicationContext(),userTags,"USER_TAGS");
+        SharedPrefUtil.saveStringList(getApplicationContext(),userTags,"USER_TAGS_"+userID);
         Spinner spinner = (Spinner) findViewById(R.id.available_tags);
         ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,spinnerItems);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

@@ -1,5 +1,6 @@
 package com.example.dailyart;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -29,13 +30,15 @@ public class PastWorkActivity extends AppCompatActivity implements AdapterView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPref = getSharedPreferences("CurrentUserID", MODE_PRIVATE);
+        String userID = sharedPref.getString("UserID", "");
         setContentView(R.layout.activity_past_works); //setContentView(R.layout.activity_past_works);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        userTags = SharedPrefUtil.getStringList(getBaseContext(),"USER_TAGS");
+        userTags = SharedPrefUtil.getStringList(getBaseContext(),"USER_TAGS_"+userID);
         if(userTags == null){
             userTags = new ArrayList<String>(Arrays.asList(new String[]{"General", "MileStone"}));
-            SharedPrefUtil.saveStringList(getApplicationContext(),userTags,"USER_TAGS");
+            SharedPrefUtil.saveStringList(getApplicationContext(),userTags,"USER_TAGS_"+userID);
         }
 
         tv = (TagView) findViewById(R.id.interactive_gallery);
@@ -55,9 +58,11 @@ public class PastWorkActivity extends AppCompatActivity implements AdapterView.O
     }
 
     private void displayImages(ArrayList<String> tagsArr){
+        SharedPreferences sharedPref = getSharedPreferences("CurrentUserID", MODE_PRIVATE);
+        String userID = sharedPref.getString("UserID", "");
         ArrayList<ArtworkModel> ams = new ArrayList<ArtworkModel>();
         for (int i = 0; i < tagsArr.size(); i++){
-            String currDir = Environment.getExternalStorageDirectory().toString() + "/Daily Art/Files/" + tagsArr.get(i) + "/";
+            String currDir = Environment.getExternalStorageDirectory().toString() + "/Daily Art/Files/" + "user_"+ userID +"/"+ tagsArr.get(i) + "/";
             File directory = new File(currDir);
             File[] files = directory.listFiles();
             if (files != null) {

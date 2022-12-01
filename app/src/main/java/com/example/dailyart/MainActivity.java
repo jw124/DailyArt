@@ -55,11 +55,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         // createNotificationChannel();
         // setAlarm();
-        ArrayList<String> userTags = SharedPrefUtil.getStringList(getApplicationContext(),"USER_TAGS");
-        if(userTags == null){
-            userTags = new ArrayList<String>(Arrays.asList(new String[]{"General", "MileStone"}));
-            SharedPrefUtil.saveStringList(getApplicationContext(),userTags,"USER_TAGS");
-        }
+
+
 
         String [] prompts = {"Waterfall", "Mountains", "Birds", "Streetscape"};
         int promptIndex = 0;
@@ -68,6 +65,11 @@ public class MainActivity extends AppCompatActivity {
         tv = (TagView) findViewById(R.id.interactive_gallery);
         String[] milestones = {"MileStone"};
         this.displayImages(milestones);
+        ArrayList<String> userTags = SharedPrefUtil.getStringList(getApplicationContext(),"USER_TAGS_"+userID);
+        if(userTags == null){
+            userTags = new ArrayList<String>(Arrays.asList(new String[]{"General", "MileStone"}));
+            SharedPrefUtil.saveStringList(getApplicationContext(),userTags,"USER_TAGS_"+userID);
+        }
 
         TextView randomPrompt = (TextView) findViewById(R.id.generated_prompt);
         randomPrompt.setOnClickListener(new View.OnClickListener() {
@@ -150,9 +152,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayImages(String[] tagsArr){
+        SharedPreferences sharedPref = getSharedPreferences("CurrentUserID", MODE_PRIVATE);
+        String userID = sharedPref.getString("UserID", "");
         ArrayList<ArtworkModel> ams = new ArrayList<ArtworkModel>();
         for (int i = 0; i < tagsArr.length; i++){
-            String currDir = Environment.getExternalStorageDirectory().toString() + "/Daily Art/Files/" + tagsArr[i] + "/";
+            String currDir = Environment.getExternalStorageDirectory().toString() + "/Daily Art/Files/"+ "user_"+ userID +"/" + tagsArr[i] + "/";
             File directory = new File(currDir);
             File[] files = directory.listFiles();
             if (files != null) {
