@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -29,7 +30,7 @@
         android:textStyle="bold"
         android:textSize="40sp"
         android:gravity="center"
-        android:layout_marginTop="60dp" />
+        android:layout_marginTop="20dp" />
     
     <TextView
         android:layout_width="match_parent"
@@ -42,13 +43,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
         android:layout_marginTop="20dp">
 
         <Button
             android:id="@+id/upload_button"
-            android:layout_width="140dp"
+            android:layout_width="153dp"
             android:layout_height="50dp"
             android:layout_marginRight="10dp"
             android:text="UPLOAD"
@@ -58,11 +59,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/milestone_button"
-            android:layout_width="140dp"
+            android:id="@+id/achievemnets_button"
+            android:layout_width="153dp"
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"
-            android:text="MILESTONE"
+            android:text="Achievements"
             android:onClick="onMainNavClick"
             android:backgroundTint="#FFC107"
             app:layout_constraintEnd_toEndOf="parent"
@@ -70,7 +71,7 @@
 
         <Button
             android:id="@+id/profile_button"
-            android:layout_width="140dp"
+            android:layout_width="153dp"
             android:layout_marginRight="10dp"
             android:layout_height="50dp"
             android:text="PROFILE"
@@ -82,21 +83,21 @@
 
         <Button
             android:id="@+id/settings_button"
-            android:layout_width="140dp"
+            android:layout_width="153dp"
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"
             android:text="SETTINGS"
             android:onClick="onMainNavClick"
             android:backgroundTint="#FFC107"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/milestone_button"
+            app:layout_constraintTop_toBottomOf="@+id/achievemnets_button"
             android:layout_marginTop="20dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/past_works_button"
-        android:layout_width="140dp"
+        android:layout_width="153dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:text="PAST WORKS"
@@ -114,14 +115,15 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Previous Works"
+            android:text="Milestones"
             android:textSize="30sp"
             android:gravity="center"
             />
 
         <com.example.dailyart.TagView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:id="@+id/interactive_gallery"/>
     </LinearLayout>
 
