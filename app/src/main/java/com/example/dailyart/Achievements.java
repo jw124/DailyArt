@@ -3,17 +3,20 @@ package com.example.dailyart;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ActionBar;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.os.Environment;
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import java.io.File;
 
 public class Achievements extends AppCompatActivity {
     private SharedPreferences sharedPref;
-    private ProgressBar share5Bar, add5Bar, share25Bar, add10Bar, share50Bar, add50Bar;
+    private ProgressBar shareBar, milestoneBar, uploadBar;
+    private TextView shareText, milestoneText, uploadText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,12 +24,12 @@ public class Achievements extends AppCompatActivity {
         setContentView(R.layout.activity_achievements);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        share5Bar = findViewById(R.id.share_5_bar);
-        add5Bar = findViewById(R.id.add_5_bar);
-        share25Bar = findViewById(R.id.share_25_bar);
-        add10Bar = findViewById(R.id.add_10_bar);
-        share50Bar = findViewById(R.id.share_50_bar);
-        add50Bar = findViewById(R.id.add_50_bar);
+        shareBar = findViewById(R.id.share_bar);
+        shareText = findViewById(R.id.share_text);
+        milestoneBar = findViewById(R.id.milestone_bar);
+        milestoneText = findViewById(R.id.milestone_text);
+        uploadBar = findViewById(R.id.upload_bar);
+        uploadText = findViewById(R.id.upload_text);
         sharedPref = getSharedPreferences("CurrentUserID", MODE_PRIVATE);
 
         setBars();
@@ -34,14 +37,34 @@ public class Achievements extends AppCompatActivity {
 
     private void setBars() {
         int shareCount = sharedPref.getInt("ShareCount", 0);
-        share5Bar.setProgress(100 * shareCount / 5);
-        share25Bar.setProgress(100 * shareCount / 25);
-        share50Bar.setProgress(100 * shareCount / 50);
+        int shareLevel = shareCount / 5;
+        int shareRemainder = shareCount % 5;
+        shareText.setText("Share " + String.valueOf(5 * (shareLevel + 1)) + " Works!");
+        shareBar.setProgress(100 * shareRemainder / 5);
 
-        int galleryCount = sharedPref.getInt("GalleryCount", 0);
-        add5Bar.setProgress(100 * galleryCount / 5);
-        add10Bar.setProgress(100 * galleryCount / 10);
-        add50Bar.setProgress(100 * galleryCount / 50);
+        int milestoneCount = countFiles(Environment.getExternalStorageDirectory() + "/Daily Art/Files/MileStone");
+        int milestoneLevel = milestoneCount / 5;
+        int milestoneRemainder = milestoneCount % 5;
+        milestoneText.setText("Set " + String.valueOf(5 * (milestoneLevel + 1)) + " Milestones!");
+        milestoneBar.setProgress(100 * milestoneRemainder / 5);
+
+        int pastWorkCount = countFiles(Environment.getExternalStorageDirectory() + "/Daily Art/Files/General");
+        int pastWorkLevel = pastWorkCount / 10;
+        int pastWorkRemainder = pastWorkCount % 10;
+        uploadText.setText("Upload " + String.valueOf(10 * (pastWorkLevel + 1)) + " Works");
+        uploadBar.setProgress(100 * pastWorkRemainder / 10);
+    }
+
+    private int countFiles(String path){
+        int count = 0;
+        File dir = new File(path);
+        File files[] = dir.listFiles();
+        for (File f : files){
+            if (f.getName().contains(".jpg")){
+                count ++;
+            }
+        }
+        return count;
     }
 
     @Override
