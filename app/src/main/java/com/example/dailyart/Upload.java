@@ -386,9 +386,10 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
 
     // share function (image + text)
     private void share() {
+        String userID = sharedPref.getString("UserID", "");
         SharedPreferences.Editor editor = sharedPref.edit();
-        int shareCount = sharedPref.getInt("ShareCount", 0);
-        editor.putInt("ShareCount", shareCount + 1);
+        int shareCount = sharedPref.getInt("ShareCount_" + userID, 0);
+        editor.putInt("ShareCount_" + userID, shareCount + 1);
         editor.apply();
 
         String shareBody = Comment.getText().toString();
