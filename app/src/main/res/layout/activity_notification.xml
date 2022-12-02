@@ -19,8 +19,8 @@
 
     <Button
         android:id="@+id/back_button"
-        android:layout_width="153dp"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="140dp"
         android:layout_marginTop="324dp"
         android:backgroundTint="#FFC107"
@@ -30,8 +30,8 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:layout_width="153dp"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:backgroundTint="#FFC107"
         android:layout_marginStart="140dp"
         android:layout_marginTop="5dp"
