@@ -492,7 +492,7 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
         View customLayout = getLayoutInflater().inflate(R.layout.delete_tag_dialog,null);
         builder.setView(customLayout);
         Spinner tagSpinner = (Spinner) customLayout.findViewById(R.id.delete_tags_spinner);
-        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,spinnerItems);
+        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,userTags);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         tagSpinner.setAdapter(aa);
@@ -540,7 +540,7 @@ public class Upload extends AppCompatActivity implements View.OnClickListener, A
         SharedPreferences sharedPref = getSharedPreferences("CurrentUserID", MODE_PRIVATE);
         String userID = sharedPref.getString("UserID", "");
         userTags.add(0,data);
-        spinnerItems.add(0,data);
+        spinnerItems.add(1,data);
         SharedPrefUtil.saveStringList(getApplicationContext(),userTags,"USER_TAGS_"+userID);
         Spinner spinner = (Spinner) findViewById(R.id.available_tags);
         ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,spinnerItems);
