@@ -61,6 +61,9 @@ public class Achievements extends AppCompatActivity {
         int count = 0;
         File dir = new File(path);
         File files[] = dir.listFiles();
+        if (files == null){
+            return 0;
+        }
         for (File f : files){
             if (f.getName().contains(".jpg")){
                 count ++;
