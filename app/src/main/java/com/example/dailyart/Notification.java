@@ -40,7 +40,7 @@ public class Notification extends AppCompatActivity {
             }
         });
         createNotificationChannel();
-        setAlarm();
+        //setAlarm();
 
     }
 
@@ -90,8 +90,13 @@ public class Notification extends AppCompatActivity {
             notificationManager.createNotificationChannel(channel);
         }
     }
+
+    public void createAlarm(View view){
+        setAlarm();
+    }
+
     public void cancelAlarm(View view){
         alarmManager.cancel(pendingIntent);
-        Toast.makeText(this, "You cancel it", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "You cancel it!", Toast.LENGTH_SHORT).show();
     }
 }

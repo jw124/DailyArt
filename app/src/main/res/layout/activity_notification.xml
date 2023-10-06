@@ -11,27 +11,32 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <TextView
+
+
+
+        <TextView
         android:id="@+id/welcome_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="212dp"
+        android:layout_marginTop="20dp"
         android:text="SETTING"
         android:textSize="30sp"
         android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="14dp" />
 
-    <Button
-        android:id="@+id/back_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="324dp"
-        android:backgroundTint="#FFC107"
-        android:gravity="center"
-        android:text="Back" />
 
-    <Button
+
+        <Button
+            android:id="@+id/back_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="324dp"
+            android:backgroundTint="#FFC107"
+            android:gravity="center"
+            android:text="Back" />
+
+        <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="#FFC107"
@@ -39,6 +44,16 @@
         app:layout_constraintTop_toBottomOf="@+id/back_button"
         android:onClick="cancelAlarm"
         android:text="cancel" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SET ALARM"
+            android:backgroundTint="#FFC107"
+            android:onClick="createAlarm"
+            />
+
+
     </LinearLayout>
 
 
